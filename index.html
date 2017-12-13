@@ -86,12 +86,13 @@ function onButtonClick() {
 </script>
 <!-- for Firebase messaging-->
 <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>  <!-- for Firebase web API -->
-<script>  <!-- for Firebase android API -->
+<script src="cordova.js"></script>
+<script language="javascript">  <!-- for Firebase android API -->
 	var detectPlatform = window.navigator.userAgent;
 	alert(detectPlatform);
 	if(detectPlatform.indexOf('Android') > 0 || detectPlatform.indexOf('Mobile') > 0){
 		//PhoneGap push messaging
-         document.addEventListener("deviceready",onDeviceReady,false);
+         document.addEventListener("deviceready",onDeviceReady(),false);
 	}else{
 		  // Initialize Firebase for Web API
 		  var config = {

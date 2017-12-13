@@ -42,12 +42,12 @@
 		<allow-intent href="geo:*" />
 		<resource-file src="google-services.json" target="google-services.json" />
 	</platform>
-	<!--	
+	
 	<plugin name="cordova-plugin-googlemaps" spec="2.0.0">
     <param name="API_KEY_FOR_ANDROID" value="AIzaSyASwH0oIUHsKbbzb0meiScc0QQ1-Ze5jTc" />
     <param name="API_KEY_FOR_IOS" value="AIzaSyASwH0oIUHsKbbzb0meiScc0QQ1-Ze5jTc" />
 	</plugin>
-	-->	
+
 
 	<plugin name="phonegap-plugin-push" source="npm" spec="1.9.0">
 		<variable name="SENDER_ID" value="526751421365" />
