@@ -11,79 +11,7 @@
 <!-- for Google Map -->
 <script src="http://maps.google.com/maps/api/js?key=AIzaSyASwH0oIUHsKbbzb0meiScc0QQ1-Ze5jTc&callback=initializeMap&sensor=false"></script> 
 <script src="phonegap.js"></script>
-<script language="javascript">
- var map;
- function initializeMap() {
-	var detectPlatform = window.navigator.userAgent;
-	if(detectPlatform.indexOf('Android') > 0 || detectPlatform.indexOf('Mobile') > 0){			
-		//Cordova plugin Google Map
-		document.addEventListener("deviceready", function() {
-			var div = document.getElementById("map_canvas");
 
-			// Initialize the map view
-			var myOptions = {
-				'mapType': plugin.google.maps.MapTypeId.ROADMAP,
-				'camera': {
-				target: {lat: 3.040374, lng: 101.624741},
-				zoom: 15
-				}
-			};
-			map = plugin.google.maps.Map.getMap(div, myOptions);
-
-			// Wait until the map is ready status.
-			map.addEventListener(plugin.google.maps.event.MAP_READY, onMapReady);
-		}, false);
-	}else{
-		//web Map
-		var myLatlng = new google.maps.LatLng( 3.040374, 101.624741 );
-		var myOptions = {
-			zoom: 15,
-			center: myLatlng,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		}
-		var mapLoad = new google.maps.Map( document.getElementById( "map_canvas" ), myOptions );
-		var myMarker1 = new google.maps.Marker({position: new google.maps.LatLng(3.150113, 101.696178), map: mapLoad, title: 'MDC Group of Companies' });
-		myMarker1.setMap(mapLoad);
-	}
- }
- 
- //Cordova plugin Google Map
- function onMapReady() {
-  var button = document.getElementById("button");
-  button.addEventListener("click", onButtonClick);
-}
-
-function onButtonClick() {
-  // Move to the position with animation
-  map.animateCamera({
-    'target': {lat: 3.040374, lng: 101.624741},
-    'zoom': 17,
-	'bearing': 0,
-	'tilt': 0,
-	'duration': 2000
-  }, function() {
-
-    // Add a maker
-    map.addMarker({
-      'position': {lat: 3.040374, lng: 101.624741},
-      'title': "MDC",
-      'snippet': "No. 1, Jalan Serindit 2, Bandar Puchong Jaya, 47100 Puchong, Selangor",
-      'animation': plugin.google.maps.Animation.BOUNCE
-    }, function(marker) {
-
-      // Show the info window
-      marker.showInfoWindow();
-
-      // Catch the click event
-      marker.on(plugin.google.maps.event.INFO_CLICK, function() {
-
-        // To do something...
-
-      });
-    });
-  });
-}
-</script>
 <!-- for Firebase messaging-->
 <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>  <!-- for Firebase web API -->
 <script src="cordova.js"></script>
