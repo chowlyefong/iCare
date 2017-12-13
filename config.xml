@@ -14,6 +14,7 @@
 	<preference name="orientation" value="portrait" />
 	<preference name="target-device" value="universal" />
 	<preference name="fullscreen" value="true" />
+	<preference name="android-build-tool" value="gradle" />
 	
 	<icon src="iCare144_xxhdpi.png" platform="ios" />
 	<icon src="iCare48_mdpi.png" platform="android" qualifier="mdpi" />
