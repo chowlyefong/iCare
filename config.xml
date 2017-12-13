@@ -48,7 +48,7 @@
 	</plugin>
 	-->	
 
-	<plugin name="phonegap-plugin-push" source="npm" spec="2.0.0">
+	<plugin name="phonegap-plugin-push" source="npm" spec="1.9.0">
 		<variable name="SENDER_ID" value="526751421365" />
 	</plugin>
 
