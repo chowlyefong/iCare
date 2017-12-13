@@ -39,7 +39,7 @@
 		<allow-intent href="sms:*" />
 		<allow-intent href="mailto:*" />
 		<allow-intent href="geo:*" />
-		<resource-file src="google-services.json" target="app/google-services.json" />
+		<resource-file src="google-services.json" target="google-services.json" />
 	</platform>
 	<!--	
 	<plugin name="cordova-plugin-googlemaps" spec="2.0.0">
