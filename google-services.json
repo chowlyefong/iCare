@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "526751421365",
+    "firebase_url": "https://onelife-001.firebaseio.com",
+    "project_id": "onelife-001",
+    "storage_bucket": "onelife-001.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526751421365:android:bc6cf8b5a9b8f0fe",
+        "android_client_info": {
+          "package_name": "com.iCare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526751421365-i8jqs4e4t72vtfhhr4lkl1s8d8ffulnf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUFfMyQWkImuCJj-DWEW8AqJ0mFSWI_II"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

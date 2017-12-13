@@ -1,0 +1,1997 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+<!-- for Firebase web API -->
+<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+<script src="cordova.js"></script>
+<script>
+	var detectPlatform = window.navigator.userAgent;
+	if(detectPlatform.indexOf('Android') > 0 || detectPlatform.indexOf('Mobile') > 0){
+		//PhoneGap push messaging
+         document.addEventListener("deviceready",onDeviceReady,false);
+	}else{
+		  // Initialize Firebase for Web API
+		  var config = {
+			apiKey: "AIzaSyDRgxYPNcy2LALuCS-UXWSFEffboWaF9wo",
+			authDomain: "onelife-001.firebaseapp.com",
+			databaseURL: "https://onelife-001.firebaseio.com",
+			projectId: "onelife-001",
+			storageBucket: "",
+			messagingSenderId: "526751421365"
+		  };
+		  firebase.initializeApp(config);
+	}
+	
+	function pushMsg(){
+		//trigger Firebase push message
+		var push = PushNotification.init({ "android": {"senderID": 526751421365 );
+		push.on('registration', function(data) {
+		// data.registrationId
+		});push.on('notification', function(data) {
+		// data.message,
+		// data.title,
+		// data.count,
+		// data.sound,
+		// data.image,
+		// data.additionalData
+		});
+		push.on('error', function(e) {
+			alert(e.message);
+		});
+	}
+	
+	function onDeviceReady() {
+		 var push = PushNotification.init({ "android": {"senderID": 526751421365}});
+		 push.on('registration', function(data) {
+		 alert('Your Registration ID: ' + data.registrationId);
+		 });
+
+		 push.on('notification', function(data) {
+		 alert(data.title+"- Message: " +data.message);
+		 });
+
+		 push.on('error', function(e) {
+		 alert(e);
+		 });
+	}
+</script>
+<!-- for jQuery Mobile -->
+<script src="script/jquery-2.2.1.min.js"></script>  <!-- http://code.jquery.com/jquery-2.2.1.min.js -->
+<script src="script/jquery.mobile-1.4.5.js"></script>
+<link rel="stylesheet" href="script/jquery.mobile-1.4.5.css" />
+<link rel="stylesheet" href="script/jquery.mobile.theme-1.4.5.css" />
+<link rel="stylesheet" href="css/ownCss.css" />
+<!-- for Google Map -->
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyASwH0oIUHsKbbzb0meiScc0QQ1-Ze5jTc&callback=initializeMap&sensor=false"></script> 
+<script src="phonegap.js"></script>
+<script language="javascript">
+ var map;
+ function initializeMap() {
+	var detectPlatform = window.navigator.userAgent;
+	if(detectPlatform.indexOf('Android') > 0 || detectPlatform.indexOf('Mobile') > 0){			
+		//Cordova plugin Google Map
+		document.addEventListener("deviceready", function() {
+			var div = document.getElementById("map_canvas");
+
+			// Initialize the map view
+			var myOptions = {
+				'mapType': plugin.google.maps.MapTypeId.ROADMAP,
+				'camera': {
+				target: {lat: 3.040374, lng: 101.624741},
+				zoom: 15
+				}
+			};
+			map = plugin.google.maps.Map.getMap(div, myOptions);
+
+			// Wait until the map is ready status.
+			map.addEventListener(plugin.google.maps.event.MAP_READY, onMapReady);
+		}, false);
+	}else{
+		//web Map
+		var myLatlng = new google.maps.LatLng( 3.040374, 101.624741 );
+		var myOptions = {
+			zoom: 15,
+			center: myLatlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		}
+		var mapLoad = new google.maps.Map( document.getElementById( "map_canvas" ), myOptions );
+		var myMarker1 = new google.maps.Marker({position: new google.maps.LatLng(3.150113, 101.696178), map: mapLoad, title: 'MDC Group of Companies' });
+		myMarker1.setMap(mapLoad);
+	}
+ }
+ 
+ //Cordova plugin Google Map
+ function onMapReady() {
+  var button = document.getElementById("button");
+  button.addEventListener("click", onButtonClick);
+}
+
+function onButtonClick() {
+  // Move to the position with animation
+  map.animateCamera({
+    'target': {lat: 3.040374, lng: 101.624741},
+    'zoom': 17,
+	'bearing': 0,
+	'tilt': 0,
+	'duration': 2000
+  }, function() {
+
+    // Add a maker
+    map.addMarker({
+      'position': {lat: 3.040374, lng: 101.624741},
+      'title': "MDC",
+      'snippet': "No. 1, Jalan Serindit 2, Bandar Puchong Jaya, 47100 Puchong, Selangor",
+      'animation': plugin.google.maps.Animation.BOUNCE
+    }, function(marker) {
+
+      // Show the info window
+      marker.showInfoWindow();
+
+      // Catch the click event
+      marker.on(plugin.google.maps.event.INFO_CLICK, function() {
+
+        // To do something...
+
+      });
+    });
+  });
+}
+</script>
+
+</head>
+
+<body onload="initializeMap();">
+
+<!-- Login Page -->
+<div data-role="page" id="loginPage" data-title="iCare">
+	<div data-role="header" data-position="fixed" data-theme="a" font-size="9pt">
+		<h5>Welcome</h5>
+	</div>
+	
+    <div role="main" class="ui-content">
+		<p align="center"><img src="img/mdc.jpg" width="139" height="153" /></p>
+		<p class="title">MDC iCare<br/><br/><br/></p>
+	
+		<button class="font-small" onClick="
+			var x=window.document.getElementById('oldLogin');
+			if (x.style.display != 'block'){
+				x.style.display = 'block';
+			}else{
+				x.style.display = 'none';
+			}
+			">Login to iCare</button>
+		<table id='oldLogin' style="display:none; width:80%;" align="center">
+		<tr >
+		<td style="vertical-align:center">Username:</td>
+		<td ><input id="usrname" size="30" type="text"/></td>
+		<td>&nbsp;</td>
+		</tr><tr>
+		<td style="vertical-align:center">Password:</td>
+		<td><input id="pswrd" type="password" size="30" /></td>
+		<td><a data-icon="arrow-r" id='submitLogin' data-iconpos="notext" data-role="button" href="#message" onClick="
+			initializeMap();
+			var x=window.document.getElementById('oldLogin');
+			if (x.style.display != 'block'){
+				x.style.display = 'block';
+			}else{
+				x.style.display = 'none';
+			};
+		
+			if (window.document.getElementById('usrname').value == '' || window.document.getElementById('pswrd').value == ''){
+				window.document.getElementById('errorMsg').style.display = 'block';
+				return false;
+			}else{
+				$('#usrname').value = '';
+				$('#pswrd').value = '';
+				return true;
+			};">Login</a></td>
+		</tr>
+		</table>
+    </div>
+	<div id="errorMsg" class="ui-corner-all" style="display:none;position: absolute; top:250px; left:10px; width:85%; background-color:lightGray; padding:15px; text-align:center;font-weight:bold">Please enter Username and Password to login.
+		<a data-role="button" href="#" class="ui-btn ui-corner-all" onclick="
+			window.document.getElementById('errorMsg').style.display = 'none';
+		">OK</a>
+	</div>
+    <!-- /content -->
+	<div data-role="footer" data-position="fixed" data-theme="a">
+		<h4><i>&copy MDC Group ~ iCare v0.1 </i></h4>
+	</div>
+</div>
+<!-- /page -->
+
+<!-- MyAccount page -->
+<div data-role="page" id="myAccount">
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - My Account</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+            <a data-icon="bars" data-iconpos="notext" data-role="button" href="#menuPanelA">Menu</a>
+        </div>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---  Menu ------>
+	<div data-role="panel" id="menuPanelA" data-display="overlay">
+    <p class="titleSmall" style="padding-bottom:10pt"><img class="icon" src="img/icare_icon.png" />  iCare</p> 
+    <ul data-role="listview">
+		<li><a href="#myAccount">Menu 1</a></li>
+		<li><a href="#mobileCash">Menu 2</a></li>
+		<li><a href="#nearestBr" onclick="
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();">Menu 3 (Google Map)</a></li>
+		<li><a href="#setupAppointment">Setup Appointment</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#loginPage">Logout</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Terms of Usage</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Privacy Policy</a></li>
+    </ul>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content">
+        <!--<a href="#" class="ui-btn ui-corner-all blue">My Accounts</a> -->
+		<ul data-role="listview" data-inset="true" data-divider-theme="a">
+		    <li data-role="list-divider" style="margin:0pt">Primary CASA (<span id="accNum1">701-XXXXX547</span>)</li>
+			<li><b>Balance (MYR):</b> <span id="accAmt1" class="titleBlue">9200</span><br/>
+				<b>Safe-to-Spend (MYR):</b> <span id="accSafe1" class="titleGreen">8550</span></li>
+			<li data-role="list-divider">360 Account (<span id="accNum2">701-XXXXX132</span>)</li>
+			<li><b>Balance (MYR):</b> <span id="accAmt2" class="titleBlue">5300</span></li>
+		</ul>
+		<p class="pgTitle"><span class="pgTitleRed">GOALS</span> TARGET:</p>
+        <div id="canvas-holder" style="width:100%">
+			<canvas id="chart-area" />
+		</div>
+		<script>
+		var config = {
+			type: 'doughnut',
+			data: {
+				datasets: [{
+					data: [
+						Math.round((saved / target)*100),
+						Math.round(100-((saved / target)*100)),
+					],
+					backgroundColor: [
+						window.chartColors.green,
+						window.chartColors.yellow,
+					],
+					label: 'Dataset 1'
+				}],
+				labels: [
+					"Total Saved (%)",
+					"Target Yet to Achieve (%)",
+				]
+			},
+			options: {
+				responsive: true,
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: false,
+					text: 'My Total Goals Chart'
+				},
+				animation: {
+					animateScale: true,
+					animateRotate: true
+				}
+			}
+		};
+
+		window.onload = function() {
+			var ctx = document.getElementById("chart-area").getContext("2d");
+			window.myDoughnut = new Chart(ctx, config);
+		};
+		</script>
+    </div>
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		  <li><a href="#deal" data-icon="star" >Deals</a></li>
+		  <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		  <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+<!-- My Goal page -->
+<div data-role="page" id="myGoals">
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - My Goals</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+            <a data-icon="bars" data-iconpos="notext" data-role="button" href="#menuPanelG">Menu</a>
+        </div>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---  Menu ------>
+	<div data-role="panel" id="menuPanelG" data-display="overlay">
+    <p class="titleSmall" style="padding-bottom:10pt"><img class="icon" src="img/icare_icon.png" /> iCare</p> 
+    <ul data-role="listview">
+		<li><a href="#myAccount">Menu 1</a></li>
+		<li><a href="#mobileCash">Menu 2</a></li>
+		<li><a href="#nearestBr" onclick="
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();">Menu 3 (Google Map)</a></li>
+		<li><a href="#setupAppointment">Setup Appointment</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#loginPage">Logout</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Terms of Usage</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Privacy Policy</a></li>
+    </ul>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content">
+	<!--<a href="#" class="ui-btn ui-corner-all blue">My Goals</a>-->
+	<script>var nextNum = 3; </script>
+	<p class="pgTitle"><span class="pgTitleRed">SUMMARY</span> OF MY GOALS:</p>
+	<table id="goalTbl" class="travel" style="width:100%"  cellspacing=0 cellpadding=0><tr>
+		<td width="60%">
+			Percentage:<br/>
+    		<input type="range" name="Goal1" id="g1" data-highlight="true" data-mini="true" min="0" max="100" value="50"></td>
+		<td width="40%" style="text-align:left"><span class="titleGoal" id='g1txt' style="cursor:hand" onclick="
+				window.document.getElementById('editGoal').style.display = 'block';
+				window.document.getElementById('newGoalBtn').style.display = 'none';
+				window.document.getElementById('goalNum').value = '1';
+				window.document.getElementById('goalDesc').value = window.document.getElementById('g1txt').innerText;
+				window.document.getElementById('goalAmt').value = window.document.getElementById('g1Amt').innerText;
+				target = target - parseInt(window.document.getElementById('g1Amt').innerText);
+				var d = window.document.getElementById('g1Date').innerText;
+				window.document.getElementById('goalDt').value = d.substr(6,4) + '-' + d.substr(3,2) + '-' + d.substr(0,2);
+			">Europe Trip</span><br/>
+			<b>Target (MYR):</b> <span id="g1Amt" class="titleGreen">20000</span><br/>
+			<b>By</b> <span id="g1Date" class="titleBlue"> 30-06-2018</span>
+			</td>
+	</tr><tr>
+		<td>
+    		<input type="range" name="Goal2" id="g2" data-highlight="true" data-mini="true" min="0" max="100" value="60"></td>
+		<td style="text-align:left"><span class="titleGoal" id='g2txt' style="cursor:hand" onclick="
+				window.document.getElementById('editGoal').style.display = 'block';
+				window.document.getElementById('newGoalBtn').style.display = 'none';
+				window.document.getElementById('goalNum').value = '2';
+				window.document.getElementById('goalDesc').value = window.document.getElementById('g2txt').innerText;
+				window.document.getElementById('goalAmt').value = window.document.getElementById('g2Amt').innerText;
+				var d = window.document.getElementById('g2Date').innerText;
+				window.document.getElementById('goalDt').value = d.substr(6,4) + '-' + d.substr(3,2) + '-' + d.substr(0,2);
+			">iPhone 8x</span><br/>
+			<b>Target (MYR):</b> <span id="g2Amt" class="titleGreen">5000</span><br/>
+			<b>By</b> <span id="g2Date" class="titleBlue"> 28-02-2018</span></td>
+	</tr><tr>
+		<td id="goalrow13" style="display:none">
+    		<input type="range" name="Goal3" id="g3" data-highlight="true" data-mini="true" min="0" max="100" value="0"></td>
+		<td><span id="goalrow23" style="display:none"><span class="titleGoal" id='g3txt' style="cursor:hand" onclick="
+				window.document.getElementById('editGoal').style.display = 'block';
+				window.document.getElementById('newGoalBtn').style.display = 'none';
+				window.document.getElementById('goalNum').value = '3';
+				window.document.getElementById('goalDesc').value = window.document.getElementById('g3txt').innerText;
+				window.document.getElementById('goalAmt').value = window.document.getElementById('g3Amt').innerText;
+				var d = window.document.getElementById('g3Date').innerText;
+				window.document.getElementById('goalDt').value = d.substr(6,4) + '-' + d.substr(3,2) + '-' + d.substr(0,2);
+			">Goal 3</span><br/>
+			<b>Target (MYR):</b> <span id="g3Amt" class="titleGreen">12000</span><br/>
+			<b>By</b> <span id="g3Date" class="titleBlue"> 30-11-2018</span>
+			</span></td>
+	</tr><tr>
+		<td id="goalrow14" style="display:none">
+    		<input type="range" name="Goal4" id="g4" data-highlight="true" data-mini="true" min="0" max="100" value="0"></td>
+		<td><span id="goalrow24" style="display:none"><span class="titleGoal" id='g4txt' style="cursor:hand" onclick="
+				window.document.getElementById('editGoal').style.display = 'block';
+				window.document.getElementById('newGoalBtn').style.display = 'none';
+				window.document.getElementById('goalNum').value = '4';
+				window.document.getElementById('goalDesc').value = window.document.getElementById('g4txt').innerText;
+				window.document.getElementById('goalAmt').value = window.document.getElementById('g4Amt').innerText;
+				var d = window.document.getElementById('g4Date').innerText;
+				window.document.getElementById('goalDt').value = d.substr(6,4) + '-' + d.substr(3,2) + '-' + d.substr(0,2);
+			">Goal 4</span><br/>
+			<b>Target (MYR):</b> <span id="g4Amt" class="titleGreen">12000</span><br/>
+			<b>By</b> <span id="g4Date" class="titleBlue"> 30-11-2018</span>
+			</span></td>
+	</tr><tr>
+		<td id="goalrow15" style="display:none">
+    		<input type="range" name="Goal5" id="g5" data-highlight="true" data-mini="true" min="0" max="100" value="0"></td>
+		<td><span id="goalrow25" style="display:none"><span class="titleGoal" id='g5txt' style="cursor:hand" onclick="
+				window.document.getElementById('editGoal').style.display = 'block';
+				window.document.getElementById('newGoalBtn').style.display = 'none';
+				window.document.getElementById('goalNum').value = '5';
+				window.document.getElementById('goalDesc').value = window.document.getElementById('g5txt').innerText;
+				window.document.getElementById('goalAmt').value = window.document.getElementById('g5Amt').innerText;
+				var d = window.document.getElementById('g5Date').innerText;
+				window.document.getElementById('goalDt').value = d.substr(6,4) + '-' + d.substr(3,2) + '-' + d.substr(0,2);
+			">Goal 5</span><br/>
+			<b>Target (MYR):</b> <span id="g5Amt" class="titleGreen">12000</span><br/>
+			<b>By</b> <span id="g5Date" class="titleBlue"> 30-11-2018</span>
+			</span></td>
+	</tr>
+	</table>
+	<div id="editGoal" style="display:none">
+	<p class="pgTitle"><span class="pgTitleRed">SET</span> GOAL TARGET:</p>
+	<input type="hidden" id="goalNum">
+	<table id="goalTbl2" class="travel" style="width:100%;" cellspacing=0 cellpadding=0><tr>
+		<td width="35%">Goal Description</td>
+		<td width="65%"><input id="goalDesc" type="text" ></td>
+	</tr><tr>
+		<td >Amount (MYR)</td>
+		<td ><input id="goalAmt" type="text"></td>
+	</tr><tr>
+		<td >Target Date</td>
+		<td ><input id="goalDt" type="date"></td>
+	</tr><tr style="vertical-align:top">
+		<td style="padding-top: 8pt">Save Monthly into this Goal?</td>
+		<td ><label><input id="goalMthly" type="checkbox" onclick="if (this.checked)
+			window.document.getElementById('goalMthlyFld').style.display = 'block'; 
+			else
+			window.document.getElementById('goalMthlyFld').style.display = 'none';"><span class="font-small">Yes, debit Primary CASA</span></label>
+		<div id="goalMthlyFld" style="display:none"><input type="text" id="goalMthlyAmt" style="background-image:url(img/mthlyAmt.png);
+				background-repeat:no-repeat; background-position:2px;padding-left:95px;"></div>
+		</td>
+	</tr><tr>
+		<td colspan=2>
+		<a href="#" class="ui-btn ui-corner-all" data-position-to="window" onclick="
+			var gdesc = window.document.getElementById('goalDesc').value;
+			var gamt = window.document.getElementById('goalAmt').value; 
+			var gdate = window.document.getElementById('goalDt').value.toString();
+			if (gdesc == '' || gamt == '' || gdate == ''){
+				window.document.getElementById('saveGoalMsg').innerText = 'Please fill up the form before saving';
+			}else{
+				gdate = gdate.substr(8,2) + '-' + gdate.substr(5,2) + '-' + gdate.substr(0,4);
+				for (x=1; x<6; x++){
+					if (window.document.getElementById('goalNum').value == x.toString()){
+						txt = 'g'+x+'txt';
+						window.document.getElementById(txt).innerText = gdesc;
+						txt = 'g'+x+'Amt';
+						window.document.getElementById(txt).innerText = gamt;
+						txt = 'g'+x+'Date';
+						window.document.getElementById(txt).innerText = gdate;
+					}
+				};
+				window.document.getElementById('editGoal').style.display = 'none';
+				window.document.getElementById('newGoalBtn').style.display = 'block';
+				if (window.document.getElementById('goalNum').value == '3'){
+					window.document.getElementById('goalrow13').style.display = 'block';
+					window.document.getElementById('goalrow23').style.display = 'block';
+					window.document.getElementById('transparentOverlay3').style.display = 'block';
+					nextNum = 4;
+				}else if (window.document.getElementById('goalNum').value == '4'){
+					window.document.getElementById('goalrow14').style.display = 'block';
+					window.document.getElementById('goalrow24').style.display = 'block';
+					window.document.getElementById('transparentOverlay4').style.display = 'block';
+					nextNum = 5;
+				}else if (window.document.getElementById('goalNum').value == '5'){
+					window.document.getElementById('goalrow15').style.display = 'block';
+					window.document.getElementById('goalrow25').style.display = 'block';
+					window.document.getElementById('transparentOverlay5').style.display = 'block';
+					nextNum = 5;
+				};
+				window.document.getElementById('goalDesc').value = '';
+				window.document.getElementById('goalAmt').value = '';
+				window.document.getElementById('goalDt').value = '';
+				window.document.getElementById('goalMthlyFld').style.display = 'none';
+				window.document.getElementById('goalMthly').checked = null;
+				window.document.getElementById('goalMthlyAmt').value = '';
+				target = target + parseInt(gamt);
+				window.document.getElementById('saveGoalMsg').innerText = 'Your record has been saved.';
+			}
+			window.document.getElementById('saveGoal').style.display = 'block';
+			">Save</a>
+		</td>
+	</tr>
+	</table> 
+	</div>
+	
+	<!-- DIV overlay to prevent from adjusting slider -->
+	<div id="transparentOverlay" class="ui-corner-all" style="display:block;position: absolute; z-index:2; top:150px; height:40px; left:80px; width:75px; background-color:none; padding:35px;">&nbsp;</div>
+	<div id="transparentOverlay3" class="ui-corner-all" style="display:none;position: absolute; z-index:2; top:280px; height:10px; left:80px; width:95px; background-color:none; padding:15px;">&nbsp;</div>
+	<div id="transparentOverlay4" class="ui-corner-all" style="display:none;position: absolute; z-index:2; top:340px; height:10px; left:80px; width:95px; background-color:none; padding:15px;">&nbsp;</div>
+	<div id="transparentOverlay5" class="ui-corner-all" style="display:none;position: absolute; z-index:2; top:400px; height:10px; left:80px; width:95px; background-color:none; padding:15px;">&nbsp;</div>
+	<!-- create new goal -->
+	<a href="#" class="ui-btn ui-corner-all" data-position-to="window" id="newGoalBtn" onclick="
+	window.document.getElementById('editGoal').style.display = 'block';
+	window.document.getElementById('newGoalBtn').style.display = 'none';
+	window.document.getElementById('goalNum').value = nextNum;
+	">Create New Goal</a>
+	
+	<div id="saveGoal" class="ui-corner-all" style="display:none;position: absolute; z-index:3; top:250px; left:10px; width:85%; background-color:lightGray; padding:15px; text-align:center;font-weight:bold"><span id="saveGoalMsg">Your record has been saved.</span>
+		<a data-role="button" href="#" class="ui-btn ui-corner-all" onclick="
+			window.document.getElementById('saveGoal').style.display = 'none';
+		">OK</a>
+	</div>
+    </div>
+	
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		 <li><a href="#deal" data-icon="star" >Deals</a></li>
+		 <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		 <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+<!-- Mobile Cash Selection page -->
+<div data-role="page" id="mobileCash">
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - Mobile Cash</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+            <a data-icon="bars" data-iconpos="notext" data-role="button" href="#menuPanelC">Menu</a>
+        </div>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---  Menu ------>
+	<div data-role="panel" id="menuPanelC" data-display="overlay">
+    <p class="titleSmall" style="padding-bottom:10pt"><img class="icon" src="img/icare_icon.png" /> iCare</p> 
+    <ul data-role="listview">
+		<li><a href="#myAccount">Menu 1</a></li>
+		<li><a href="#mobileCash">Menu 2</a></li>
+		<li><a href="#nearestBr" onclick="
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();">Menu 3 (Google Map)</a></li>
+		<li><a href="#setupAppointment">Setup Appointment</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#loginPage">Logout</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Terms of Usage</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Privacy Policy</a></li>
+    </ul>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content">
+	<!--<a href="#" class="ui-btn ui-corner-all blue">Mobile Cash</a> -->
+	<p class="pgTitle"><span class="pgTitleRed">CARDLESS CASH WITHDRAWAL</span> METHOD</p>
+	Please select:
+	<ul data-role="listview" data-inset="true" id="mobileCashList" class="ui-mini">
+		<li><a href="#mobileCashNFC">
+			<img src="img/nfc.png">
+		<h2>NFC</h2>
+		<p class="wrap" style="font-size:8pt">With your Virtual Card at OCBC ATMs</p></a>
+		</li>
+		<li><a href="#mobileCashOCBC">
+			<img src="img/mPass.png">
+		<h2>OCBC MPass</h2>
+		<p class="wrap" style="font-size:8pt">Valid at OCBC ATMs and selected merchants</p></a>
+		</li>
+	</ul>
+	
+    </div>
+	
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		 <li><a href="#deal" data-icon="star" >Deals</a></li>
+		 <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		 <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+<!-- Mobile Cash NFC page -->
+<div data-role="page" id="mobileCashNFC">
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - Mobile Cash NFC</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+            <a data-icon="bars" data-iconpos="notext" data-role="button" href="#menuPanelCA">Menu</a>
+        </div>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---  Menu ------>
+	<div data-role="panel" id="menuPanelCA" data-display="overlay">
+    <p class="titleSmall" style="padding-bottom:10pt"><img class="icon" src="img/icare_icon.png" /> iCare</p> 
+    <ul data-role="listview">
+		<li><a href="#myAccount">Menu 1</a></li>
+		<li><a href="#mobileCash">Menu 2</a></li>
+		<li><a href="#nearestBr" onclick="
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();">Menu 3 (Google Map)</a></li>
+		<li><a href="#setupAppointment">Setup Appointment</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#loginPage">Logout</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Terms of Usage</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Privacy Policy</a></li>
+    </ul>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content">
+	<p class="pgTitle"><span class="pgTitleRed">BROWSE MOBILE CARD</span> WALLET</p>
+	<p align="center"><img src="img/debitCard.png"><br/>
+	<table><tr><td><a href="#" data-role="button" data-icon="arrow-l" data-iconpos="notext">Left</a></td>
+	<td> 1 of 1 </td><td><a href="#" data-role="button" data-icon="arrow-r" data-iconpos="notext">Right</a></td>
+	</tr></table>
+	<img src="img/fingerprint.png" width="150" height="100" class="ui-corner-all" border=1>
+	<ol>
+		<li>Select your OCBC credit or debit card.</li>
+		<li>Hold your device over the contactless / NFC symbol on the ATM and access the card in your wallet using OCBC OneTouch.</li>
+		<li>Enter your ATM PIN at the ATM and start your transaction.</li>
+	</ol>
+	</p>
+    </div>
+	
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		 <li><a href="#deal" data-icon="star" >Deals</a></li>
+		 <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		 <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+<!-- Mobile Cash OCBC MPass page -->
+<div data-role="page" id="mobileCashOCBC">
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - Mobile Cash MPass</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+            <a data-icon="bars" data-iconpos="notext" data-role="button" href="#menuPanelCB">Menu</a>
+        </div>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---  Menu ------>
+	<div data-role="panel" id="menuPanelCB" data-display="overlay">
+    <p class="titleSmall" style="padding-bottom:10pt"><img class="icon" src="img/icare_icon.png" /> iCare</p> 
+    <ul data-role="listview">
+		<li><a href="#myAccount">Menu 1</a></li>
+		<li><a href="#mobileCash">Menu 2</a></li>
+		<li><a href="#nearestBr" onclick="
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();">Menu 3 (Google Map)</a></li>
+		<li><a href="#setupAppointment">Setup Appointment</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#loginPage">Logout</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Terms of Usage</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Privacy Policy</a></li>
+    </ul>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content">
+	<!--<a href="#" class="ui-btn ui-corner-all blue">Mobile Cash</a> -->
+	<p class="pgTitle"><span class="pgTitleRed">LOCATION</span> TO WITHDRAW CASH:</p>
+	<table id="mcashTbl" class="travel" style="width:100%"><tr>
+		<td width="50%">Location Type</td>
+		<td width="50%" style="text-align:left"><select id="mcashType" onchange="
+			window.document.getElementById('branchRow').style.display = 'none';
+			window.document.getElementById('merchantRow').style.display = 'none';
+			window.document.getElementById('fpxRow').style.display = 'none';
+		
+			if (this.selectedIndex == 0) {window.document.getElementById('branchRow').style.display = 'block'; }
+			else if (this.options[this.selectedIndex].value == 'Merchants') {window.document.getElementById('merchantRow').style.display = 'block'; }
+			else if (this.options[this.selectedIndex].value == 'FPX') {window.document.getElementById('fpxRow').style.display = 'block'; }
+			">
+			<option value="OCBC">OCBC Branches</option>
+			<option value="Merchants">OCBC Merchants</option>
+			<option value="FPX">FPX Merchants - Coming Soon!</option>
+			</select>
+		</td>
+	</tr><tr>
+		<td width="50%">OCBC Branch / Outlet</td>
+		<td width="50%" style="text-align:left">
+			<span id="branchRow"><select id="OCBCBr">
+				<option value="OCBC Ampang">OCBC Ampang</option><option value="OCBC Bukit Damansara">OCBC Bukit Damansara</option>
+				<option value="OCBC Cheras">OCBC Cheras</option><option value="OCBC Kepong">OCBC Kepong</option>
+				<option value="OCBC KL Main">OCBC KL Main</option><option value="OCBC Kota Damansara">OCBC Kota Damansara</option>
+				<option value="OCBC Petaling Jaya">OCBC Petaling Jaya</option><option value="OCBC Rawang">OCBC Rawang</option>
+				<option value="OCBC Subang Jaya">OCBC Subang Jaya</option><option value="OCBC Wangsa Maju">OCBC Wangsa Maju</option>
+			</select></span>
+			<span id="merchantRow" style="display:none"><select id="MerchantsNw">
+				<option value="Aeon Maluri Guardian">Aeon Maluri Guardian</option>
+				<option value="Boost Juice KLCC">Boost Juice KLCC</option>
+				<option value="Chakra Palace Hotel">Chakra Palace Hotel</option>
+				<option value="JuiceWorks KLCC">JuiceWorks KLCC</option>
+				<option value="Watson Jalan Pudu">Watson, Jln Pudu</option>
+				<option value="Makro Cash & Carry Little India">Makro Cash & Carry, Little India</option>
+				<option value="Plato Restaurant Bukit Bintang">Plato Restaurant, Bukit Bintang</option>
+			</select></span>
+			<span id="fpxRow"  style="display:none"><select id="FpxNw">
+				<option value="N/A">Sorry, service not available yet</option>
+			</select></span>
+		</td>
+	</tr>
+	</table>
+	
+	<p class="pgTitle"><span class="pgTitleRed">SET AMOUNT</span> TO WITHDRAW:</p>
+	<table id="mcashTbl2" class="travel" style="width:100%"><tr>
+		<td width="50%">From Account</td>
+		<td width="50%"><select id="mcashAcc">
+			<option value="701-XXXXX547">Current A/C 701-XXXXX547</option>
+			<option value="701-XXXXX132">360 Account 701-XXXXX132</option>
+			</select>
+		</td>
+	</tr><tr>
+		<td >Amount (MYR)</td>
+		<td ><input id="mcashAmount" type="number"></td>
+	</tr>
+	</table> 
+	<a href="#" class="ui-btn ui-corner-all" onclick="
+		if (window.document.getElementById('mcashAmount').value != ''){
+			locType = window.document.getElementById('mcashType').options[window.document.getElementById('mcashType').selectedIndex].value;
+			loc = window.document.getElementById('OCBCBr').options[window.document.getElementById('OCBCBr').selectedIndex].value;
+			
+			if (locType == 'Merchants')
+			{ loc = window.document.getElementById('MerchantsNw').options[window.document.getElementById('MerchantsNw').selectedIndex].value; }
+			else if (locType == 'FPX') 
+			{ loc = window.document.getElementById('FpxNw').options[window.document.getElementById('FpxNw').selectedIndex].value; }
+			
+			window.document.getElementById('mcashLocation').innerText = loc;
+			window.document.getElementById('mcashAmt').innerText = window.document.getElementById('mcashAmount').value;
+			passcode = Math.floor(Math.random() * 1000000);
+			for (z = 1; z < 7; z++){
+				window.document.getElementById('mctq'+z).innerText = passcode.toString().substr(1-z, 1);
+			}
+			passcode = 0;
+			//window.document.getElementById('mcashType').selectedIndex = -1;
+			//window.document.getElementById('OCBCBr').selectedIndex = -1;
+			//window.document.getElementById('MerchantsNw').selectedIndex = -1;
+			//window.document.getElementById('FpxNw').selectedIndex = -1;
+			window.document.getElementById('mcashAmount').value = '';
+			window.document.getElementById('genMPassConfirmationMsg').innerHTML = 'Pass will be valid for only 15 mins.<br/>OK to proceed?';
+			window.document.getElementById('genMPassConfirmation').style.display = 'block';
+		}else{
+			window.document.getElementById('genMPassConfirmationMsg').innerHTML = 'Please enter amount to proceed';
+			window.document.getElementById('genMPassConfirmation').style.display = 'block';
+			return false;
+		}
+	";>Generate Withdrawal Pass</a>
+	
+	<div id="genMPassConfirmation" class="ui-corner-all" style="display:none;position: absolute; top:300px; left:10px; width:85%; background-color:lightGray; padding:15px; text-align:center;font-weight:bold"><span id="genMPassConfirmationMsg">Pass will be valid for only 15 mins.<br/>OK to proceed?</span>
+		<a data-role="button" href="#mcashPin" class="ui-btn ui-corner-all" onclick="
+			window.document.getElementById('genMPassConfirmation').style.display = 'none';
+			if (window.document.getElementById('genMPassConfirmationMsg').innerHTML == 'Please enter amount to proceed')
+				return false;
+		">OK</a>
+	</div>
+    </div>
+	
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		 <li><a href="#deal" data-icon="star" >Deals</a></li>
+		 <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		 <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+<!-- Schedule Expenses page -->
+<div data-role="page" id="scheduleExpenses">
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - Scheduled Expenses</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+            <a data-icon="bars" data-iconpos="notext" data-role="button" href="#menuPanelE">Menu</a>
+        </div>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---  Menu ------>
+	<div data-role="panel" id="menuPanelE" data-display="overlay">
+    <p class="titleSmall" style="padding-bottom:10pt"><img class="icon" src="img/icare_icon.png" /> iCare</p> 
+    <ul data-role="listview">
+		<li><a href="#myAccount">Menu 1</a></li>
+		<li><a href="#mobileCash">Menu 2</a></li>
+		<li><a href="#nearestBr" onclick="
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();">Menu 3 (Google Map)</a></li>
+		<li><a href="#setupAppointment">Setup Appointment</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#loginPage">Logout</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Terms of Usage</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Privacy Policy</a></li>
+    </ul>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content">
+	<p class="pgTitle"><span class="pgTitleRed">SUMMARY</span> FOR CURRENT MONTH:</p>
+	<table id="expTbl" class="travel" style="width:100%"><tr>
+		<td width="50%">Primary CASA</td>
+		<td width="50%" style="text-align:left">701-XXXXX547</td>
+	</tr><tr>
+		<td>Current Balance</td>
+		<td style="text-align:left"><b>MYR <span id="casaBal">9200</span></b></td>
+	</tr><tr>
+		<td>Scheduled Expenses</td>
+		<td style="text-align:left" class="titleBlue">MYR <span id="totalExp">650</span></td>
+	</tr><tr>
+		<td>Safe-to-Spend</td>
+		<td style="text-align:left" class="titleGreen">MYR <span id="safeSpend">8550</span></td>
+	</tr>
+	</table>
+	
+	<p class="pgTitle"><span class="pgTitleRed">BOOK SCHEDULE</span> EXPENSES:</p>
+	<table id="expTbl2" class="travel" cellspacing=0 cellpadding=0><tr>
+		<td width="50%">Expected Date to Spend</td>
+		<td width="50%"><input id="dtExp" type="date" ></td>
+	</tr><tr>
+		<td >Description</td>
+		<td ><input id="descExp" type="text"></td>
+	</tr><tr>
+		<td >Amount (MYR)</td>
+		<td ><input id="amtExp" type="text"></td>
+	</tr>
+	</table> 
+	<a data-rel="popup" href="#saveExpense" class="ui-btn ui-corner-all ui-mini" data-position-to="window" onclick="
+	if (window.document.getElementById('dtExp').value == '' || window.document.getElementById('descExp').value == '' || window.document.getElementById('amtExp').value == ''){
+		window.document.getElementById('saveExpenseMsg').innerText = 'Please fill up the form before saving.';
+	}else{
+		var yr = window.document.getElementById('dtExp').value.substr(0,4);
+		var mth = window.document.getElementById('dtExp').value.substr(5,2);
+		var day = window.document.getElementById('dtExp').value.substr(8,2);
+		var d = window.document.getElementById('dtExp').value;
+		var expDate = new Date(d);
+		var today = new Date(); 
+		var bal = parseInt(window.document.getElementById('safeSpend').innerText); 
+		var expense = parseInt(window.document.getElementById('totalExp').innerText); 
+		var expAmt = parseInt(window.document.getElementById('amtExp').value); 
+		if (expDate >= today && parseInt(mth) == 11)){ 
+			window.document.getElementById('safeSpend').innerText = bal - expAmt;
+			window.document.getElementById('totalExp').innerText = expense + expAmt;
+			//reflect Safe-to-Spend in My Account page
+			window.document.getElementById('accSafe1').innerText = bal - expAmt;
+			//reflect in view Expenses page (Nov)
+			window.document.getElementById('novDt'+ liID).innerText = d.substr(8,2) + '/Nov/' + d.substr(0,4);
+			window.document.getElementById('novDesc'+ liID).innerText = window.document.getElementById('descExp').value;
+			window.document.getElementById('novAmt'+ liID).innerText = window.document.getElementById('amtExp').value;
+			window.document.getElementById('novExp'+ liID).style.display = 'block';
+			liID = liID + 1;
+		}else if (parseInt(mth) == 12){
+			//reflect in view Expenses page (Dec)
+			window.document.getElementById('decDt'+ liID2).innerText = d.substr(8,2) + '/Dec/' + d.substr(0,4);
+			window.document.getElementById('decDesc'+ liID2).innerText = window.document.getElementById('descExp').value;
+			window.document.getElementById('decAmt'+ liID2).innerText = window.document.getElementById('amtExp').value;
+			window.document.getElementById('decExp'+ liID2).style.display = 'block';
+			liID2 = liID2 + 1;
+		}
+		window.document.getElementById('dtExp').value = '';
+		window.document.getElementById('amtExp').value = '';
+		window.document.getElementById('descExp').value = '';
+		window.document.getElementById('saveExpenseMsg').innerText = 'Your record has been saved.';
+	}
+	window.document.getElementById('saveExpense').style.display = 'block';
+	">Save</a>
+	<div id="saveExpense" class="ui-corner-all" style="display:none;position: absolute; top:250px; left:10px; width:85%; background-color:lightGray; padding:15px; text-align:center;font-weight:bold"><span id="saveExpenseMsg">Your record has been saved.</span>
+		<a data-role="button" href="#" class="ui-btn ui-corner-all" onclick="
+			window.document.getElementById('saveExpense').style.display = 'none';
+		">OK</a>
+	</div>
+	
+	<p class="pgTitle"><span class="pgTitleRed">VIEW SCHEDULED</span> EXPENSES:</p>
+	<ul data-role="listview" data-inset="true" class="ui-mini">
+		<li><a href="#viewScheduleExp"><img src="img/scheduleExp.jpg"><h1 class="wrap">List of Scheduled Expenses</h1></a></li>
+	</ul>
+    </div>
+	
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		 <li><a href="#deal" data-icon="star" >Deals</a></li>
+		 <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		 <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+<!-- Nearest Branch page -->
+<div data-role="page" id="nearestBr">
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - Nearest Branch</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+            <a data-icon="bars" data-iconpos="notext" data-role="button" href="#menuPanelB">Menu</a>
+        </div>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---  Menu ------>
+	<div data-role="panel" id="menuPanelB" data-display="overlay">
+    <p class="titleSmall" style="padding-bottom:10pt"><img class="icon" src="img/icare_icon.png" />  iCare</p> 
+    <ul data-role="listview">
+		<li><a href="#myAccount">Menu 1</a></li>
+		<li><a href="#mobileCash">Menu 2</a></li>
+		<li><a href="#nearestBr" onclick="
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();">Menu 3 (Google Map)</a></li>
+		<li><a href="#setupAppointment">Setup Appointment</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#loginPage">Logout</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Terms of Usage</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Privacy Policy</a></li>
+    </ul>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content" >
+	<a href="#" class="ui-btn ui-corner-all" onclick="initializeMap();" id="button">Find The Nearest Branch</a>
+	<!--- <p><img src="map.jpg" ></p> -->
+	<div id="map_canvas" style="width:98%;height:200px;" align="center"></div>
+	<p class="pgTitle"><span class="pgTitleRed">NEAREST BRANCH</span> TO YOU NOW IS:</p>
+	<table id="mapTbl" class="travel"><tr>
+		<td width="25%"><span class="brTitle">KL Main</span><br/><span class="font-small"><b>50m away</b></span><br/>
+			<a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+603 2034 5148';">Phone</a></td>
+		<td width="50%" class="font-small">
+		<select id="klmService" onchange="
+			if (this.selectedIndex == 0)
+				window.document.getElementById('klmQueue').innerText = noCustKLM;
+			else
+				window.document.getElementById('klmQueue').innerText = noCustKLM2;
+		">
+			<option value="Teller Service">Teller Service</option>
+			<option value="Personal Banking">Personal Banking</option>
+		</select>
+		<div class="brHour"><b>Open</b> (09:30-16:00)</div>
+		<span id="klmQueue">10</span> customers in queue</td>
+		<td width="25%"><a href="#getTicket" class="ui-btn-icon-right" data-role="button" data-icon="tag" 
+		onClick="window.document.getElementById('brName').innerText = 'KL Main';
+		counter = '';
+		if (window.document.getElementById('klmService').selectedIndex == 0){
+			tktKLM = tktKLM + 1;
+			counter = tktKLM.toString();
+			if (counter.length <4) { counter = '0' + tktKLM.toString()};
+			waitTimeKLM = waitTimeKLM + 3;
+			noCustKLM = noCustKLM + 1;
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+			window.document.getElementById('brMin').innerText = waitTimeKLM.toString() + ' mins';
+		}else{
+			tktKLM2 = tktKLM2 + 1;
+			counter = tktKLM2.toString();
+			if (counter.length <4) { counter = '0' + tktKLM2.toString()};
+			waitTimeKLM2 = waitTimeKLM2 + 15;
+			noCustKLM2 = noCustKLM2 + 1;
+			window.document.getElementById('klmQueue').innerText = noCustKLM2.toString();
+			window.document.getElementById('brMin').innerText = waitTimeKLM2.toString() + ' mins';
+		}
+		window.document.getElementById('ctq1').innerText = counter.substr(0,1);
+		window.document.getElementById('ctq2').innerText = counter.substr(1,1);
+		window.document.getElementById('ctq3').innerText = counter.substr(2,1);
+		window.document.getElementById('ctq4').innerText = counter.substr(3,1);
+		if (window.document.getElementById('msg7').style.display == 'none'){
+			window.document.getElementById('msgBrTitle7').innerText = 'OCBC KL Main - ' + counter;
+			window.document.getElementById('msg7').style.display = 'block';
+		} else if (window.document.getElementById('msg8').style.display == 'none'){ 
+			window.document.getElementById('msgBrTitle8').innerText = 'OCBC KL Main - ' + counter;
+			window.document.getElementById('msg8').style.display = 'block';
+		}">
+		Get<br/>Queue<br/>Ticket</a></td>
+	</tr><tr>
+		<td><span class="brTitle">Jln Ampang</span><br/><span class="font-small"><b>7.4 km away</b></span><br/>
+			<a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+603 4264 1850';">Phone</a></td>
+		<td class="font-small">
+		<select id="ampService" onchange="
+			if (this.selectedIndex == 0)
+				window.document.getElementById('ampQueue').innerText = noCustAMP;
+			else
+				window.document.getElementById('ampQueue').innerText = noCustAMP2;
+		">
+			<option value="Teller Service">Teller Service</option>
+			<option value="Personal Banking">Personal Banking</option>
+		</select>
+		<div class="brHour"><b>Open</b> (09:30-16:00)</div>
+		<span id="ampQueue">2</span> customers in queue</td>
+		<td><a href="#getTicket" class="ui-btn-icon-right" data-role="button" data-icon="tag" 
+		onClick="window.document.getElementById('brName').innerText = 'Jln Ampang';
+		counter = '';
+		if (window.document.getElementById('ampService').selectedIndex == 0){
+			tktAMP = tktAMP + 1;
+			counter = tktAMP.toString(); 
+			if (counter.length <4) { counter = '0' + tktAMP.toString()};
+			waitTimeAMP = waitTimeAMP + 3;
+			noCustAMP = noCustAMP + 1;
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();
+			window.document.getElementById('brMin').innerText = waitTimeAMP.toString() + ' mins';
+		}else{
+			tktAMP2 = tktAMP2 + 1;
+			counter = tktAMP2.toString();
+			waitTimeAMP2 = waitTimeAMP2 + 15;
+			noCustAMP2 = noCustAMP2 + 1;
+			window.document.getElementById('ampQueue').innerText = noCustAMP2.toString();
+			window.document.getElementById('brMin').innerText = waitTimeAMP2.toString() + ' mins';
+		}
+		window.document.getElementById('queueReminderTxt').innerText = 'Please ensure you will arrive in time at the branch. See you later!';
+		window.document.getElementById('ctq1').innerText = counter.substr(0,1);
+		window.document.getElementById('ctq2').innerText = counter.substr(1,1);
+		window.document.getElementById('ctq3').innerText = counter.substr(2,1);
+		window.document.getElementById('ctq4').innerText = counter.substr(3,1);
+		if (window.document.getElementById('msg7').style.display == 'none'){
+			window.document.getElementById('msgBrTitle7').innerText = 'OCBC Jln Ampang - ' + counter;
+			window.document.getElementById('msg7').style.display = 'block';
+		} else if (window.document.getElementById('msg8').style.display == 'none'){
+			window.document.getElementById('msgBrTitle8').innerText = 'OCBC Jln Ampang - ' + counter;
+			window.document.getElementById('msg8').style.display = 'block'
+		}		">Get<br/>Queue<br/>Ticket</a></td>
+	</tr><tr>
+	<td colspan=3 style="text-align:right;padding-top:3px"><a href="#allBranches">See all branches >></a></td>
+	</tr>
+	</table>
+	
+    </div>
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		 <li><a href="#deal" data-icon="star" >Deals</a></li>
+		 <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		 <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+<!-- Appointment Setup page -->
+<div data-role="page" id="setupAppointment">
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - Setup Appointment</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+            <a data-icon="bars" data-iconpos="notext" data-role="button" href="#menuPanelAp">Menu</a>
+        </div>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---  Menu ------>
+	<div data-role="panel" id="menuPanelAp" data-display="overlay">
+    <p class="titleSmall" style="padding-bottom:10pt"><img class="icon" src="img/icare_icon.png" />  iCare</p> 
+    <ul data-role="listview">
+		<li><a href="#myAccount">Menu 1</a></li>
+		<li><a href="#mobileCash">Menu 2</a></li>
+		<li><a href="#nearestBr" onclick="
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();">Menu 3 (Google Map)</a></li>
+		<li><a href="#setupAppointment">Setup Appointment</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#loginPage">Logout</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Terms of Usage</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Privacy Policy</a></li>
+    </ul>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content">
+	<!-- <a href="#" class="ui-btn ui-corner-all blue">Make An Appointment</a> -->
+	<p class="pgTitle"><span class="pgTitleRed">BOOK A DATE</span> TO DISCUSS:</p>
+	<table id="apptTbl" class="travel"><tr>
+		<td width="10%"><input type="checkbox" id="box1" /> </td>
+		<td width="15%" style="text-align:center"><img src="img/everydayBanking.png" width="40" height="40" /></td>
+		<td width="20%">Everyday Banking</td>
+		<td width="55%" class="font-small">
+			<ul><li>Saving & Rates</li><li>Personal Loan</li><li>Cards & Security</li><li>Rewards & Treats</li></ul></td>
+	</tr><tr>
+		<td ><input type="checkbox" id="box2" /></td>
+		<td style="text-align:center"><img src="img/investment.png" width="40" height="40" /></td>
+		<td>Investment & Wealth Planning</td>
+		<td class="font-small">
+			<ul><li>Retirement</li><li>Child Education</li><li>Health & Protection</li><li>Wealth Transfer</li></ul></td>
+	</tr><tr>
+		<td><input type="checkbox" id="box3" /></td>
+		<td style="text-align:center"><img src="img/businessBanking.png" width="40" height="40" /></td>
+		<td>Business Banking</td>
+		<td class="font-small">
+			<ul><li>SME Loan</li><li>Business Loan</li><li>Trade Financing</li><li>Corporate Insurance</li></ul></td>
+	</tr>
+	</table>
+	
+	<p class="pgTitle"><span class="pgTitleRed">I AM AVAILABLE</span> TO DISCUSS ON:</p>
+	<table id="apptTbl2" class="travel"><tr>
+			<td width="50%">Date <input id="dtAppt" type="date" value="2017-11-24"></td>
+			<td width="50%">Time <input id="timeAppt" type="time" value="10:00:00"></td>
+	</tr>
+	</table> 
+	<a data-rel="popup" href="#" class="ui-btn ui-corner-all blue" data-position-to="window" onclick="window.document.getElementById('saveAppt').style.display = 'block';">Save</a>
+	
+	<div id="saveAppt" class="ui-corner-all" style="display:none;position: absolute; z-index:2; top:250px; left:10px; width:85%; background-color:lightGray; padding:15px; text-align:center;font-weight:bold">Appointment saved. Our relationship manager will be contacting you soon!
+		<a data-role="button" href="#" class="ui-btn ui-corner-all" onclick="
+			window.document.getElementById('saveAppt').style.display = 'none';
+		">OK</a>
+		</div>
+    </div>
+
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		 <li><a href="#deal" data-icon="star" >Deals</a></li>
+		 <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		 <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+<!-- Manage My Card page -->
+<div data-role="page" id="manageCard">
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - Manage My Card</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+            <a data-icon="bars" data-iconpos="notext" data-role="button" href="#menuPanelMC">Menu</a>
+        </div>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---  Menu ------>
+	<div data-role="panel" id="menuPanelMC" data-display="overlay">
+    <p class="titleSmall" style="padding-bottom:10pt"><img class="icon" src="img/icare_icon.png" /> iCare</p> 
+    <ul data-role="listview">
+		<li><a href="#myAccount">Menu 1</a></li>
+		<li><a href="#mobileCash">Menu 2</a></li>
+		<li><a href="#nearestBr" onclick="
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();">Menu 3 (Google Map)</a></li>
+		<li><a href="#setupAppointment">Setup Appointment</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#loginPage">Logout</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Terms of Usage</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Privacy Policy</a></li>
+    </ul>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content">
+		<p class="pgTitle"><span class="pgTitleRed">ALLOW MY DEBIT CARD</span> FOR:</p>
+		<table id="card1" class="travel" cellpadding=0 cellspacing=0>
+		<tr>
+			<td width="15%"><img src="img/onlineTrxn.jpg" ></td>
+			<td width="55%">Online Transactions</td>
+			<td width="20%">
+			<select id="flipC1" name="flipC1" data-role="slider">
+		        <option value="off">Off</option>
+		        <option value="on">On</option>
+		    </select>
+			</td>
+		</tr><tr>
+			<td><img src="img/contactless.png" ></td>
+			<td>Contactless Payment</td>
+			<td>
+			<select id="flipC2" name="flipC2" data-role="slider">
+		        <option value="off">Off</option>
+		        <option value="on" selected>On</option>
+		    </select>
+			</td>
+		</tr>
+		</table>
+		
+		<p class="pgTitle"><span class="pgTitleRed">ALLOW MY CREDIT CARD</span> FOR:</p>
+		<select id="creditCard" onchange="if (this.selectedIndex == 0){
+			window.document.getElementById('card2').style.display = 'block';
+			window.document.getElementById('card3').style.display = 'none';
+		}else{
+			window.document.getElementById('card2').style.display = 'none';
+			window.document.getElementById('card3').style.display = 'block';
+		}
+		">
+			<option value="5595XXXXXXXX8888">World Mastercard - Card Ending 8888</option>
+			<option value="5120XXXXXXXX1234">365 Mastercard - Card Ending 1234</option>
+		</select>
+		<table id="card2" class="travel" cellpadding=0 cellspacing=0 style="display:block">
+		<tr>
+			<td width="15%"><img src="img/onlineTrxn.jpg" ></td>
+			<td width="55%">Online Transactions</td>
+			<td width="20%">
+			<select id="flipCC1" data-role="slider">
+		        <option value="off">Off</option>
+		        <option value="on" selected>On</option>
+		    </select>
+			</td>
+		</tr><tr>
+			<td><img src="img/contactless.png" ></td>
+			<td>Contactless Payment</td>
+			<td>
+			<select id="flipCC2" data-role="slider">
+		        <option value="off">Off</option>
+		        <option value="on">On</option>
+		    </select>
+			</td>
+		</tr><tr>
+			<td><img src="img/atm.jpg" ></td>
+			<td>ATM Cash Advances</td>
+			<td>
+			<select id="flipCC3" data-role="slider">
+		        <option value="off">Off</option>
+		        <option value="on">On</option>
+		    </select>
+			</td>
+		</tr><tr>
+			<td><img src="img/limit.png" ></td>
+			<td>Change Spending Limit (MYR)</td>
+			<td><input type="text" id="ccLimit2" value="30000">
+			</td>
+		</tr>
+		</table>
+		<table id="card3" class="travel" cellpadding=0 cellspacing=0 style="display:none">
+		<tr>
+			<td width="15%"><img src="img/onlineTrxn.jpg" ></td>
+			<td width="55%">Online Transactions</td>
+			<td width="20%">
+			<select id="flipCC4" data-role="slider">
+		        <option value="off">Off</option>
+		        <option value="on" selected>On</option>
+		    </select>
+			</td>
+		</tr><tr>
+			<td><img src="img/contactless.png" ></td>
+			<td>Contactless Payment</td>
+			<td>
+			<select id="flipCC5" data-role="slider">
+		        <option value="off">Off</option>
+		        <option value="on">On</option>
+		    </select>
+			</td>
+		</tr><tr>
+			<td><img src="img/atm.jpg" ></td>
+			<td>ATM Cash Advances</td>
+			<td>
+			<select id="flipCC6" data-role="slider">
+		        <option value="off">Off</option>
+		        <option value="on" selected>On</option>
+		    </select>
+			</td>
+		</tr><tr>
+			<td><img src="img/limit.png" ></td>
+			<td>Change Spending Limit (MYR)</td>
+			<td><input type="text" id="ccLimit3" value="20000">
+			</td>
+		</tr>
+		</table>
+		<a data-rel="popup" data-role="button" href="#saveCard" class="ui-btn ui-corner-all" onclick="
+			card = window.document.getElementById('creditCard').selectedIndex;
+			limit = window.document.getElementById('ccLimit2').value;
+			limit2 = window.document.getElementById('ccLimit3').value;
+			window.document.getElementById('saveCardTxt').innerText = 'Your card preferences have been saved successfully.';
+			if (limit == ''){
+				window.document.getElementById('saveCardTxt').innerText = 'Please enter a valid limit for your credit card.';
+			}else if (parseInt(limit) != cWorldlimit || parseInt(limit2) != c365limit){
+				window.document.getElementById('saveCardTxt').innerText = 'Your card preferences have been saved successfully, and the limit adjustment has been approved. Happy shopping!';
+				cWorldlimit = parseInt(limit);
+				c365limit = parseInt(limit2);
+			}
+			window.document.getElementById('saveCard').style.display = 'block';
+		">Save</a>
+		<div id="saveCard" class="ui-corner-all" style="display:none; position:absolute; z-index:2; top:250px; left:10px; width:85%; background-color:lightGray; padding:15px; text-align:center;font-weight:bold"><span id="saveCardTxt">Your card preferences have been saved successfully.</span>
+		<a data-role="button" href="#" class="ui-btn ui-corner-all" onclick="
+			window.document.getElementById('saveCard').style.display = 'none';
+		">OK</a>
+		</div>
+    </div>
+	
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		 <li><a href="#deal" data-icon="star" >Deals</a></li>
+		 <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		 <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+<!-- Traveling Setup page -->
+<div data-role="page" id="setupTravel">
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - I am Traveling!</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+            <a data-icon="bars" data-iconpos="notext" data-role="button" href="#menuPanelT">Menu</a>
+        </div>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---  Menu ------>
+	<div data-role="panel" id="menuPanelT" data-display="overlay">
+    <p class="titleSmall" style="padding-bottom:10pt"><img class="icon" src="img/icare_icon.png" /> iCare</p> 
+    <ul data-role="listview">
+		<li><a href="#myAccount">Menu 1</a></li>
+		<li><a href="#mobileCash">Menu 2</a></li>
+		<li><a href="#nearestBr" onclick="
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();">Menu 3 (Google Map)</a></li>
+		<li><a href="#setupAppointment">Setup Appointment</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#loginPage">Logout</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Terms of Usage</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Privacy Policy</a></li>
+    </ul>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content">
+		<!--<a href="#" class="ui-btn ui-corner-all blue">Overseas Travel</a>-->
+		<img src="img/traveling.jpg" width="320" height="60" />
+		<p class="pgTitle"><span class="pgTitleRed">I WILL BE GOING</span> OVERSEAS:</p>
+		<table id="travel1" class="travel"><tr>
+			<td width="30%">Country</td><td width="70%"><select id="country" width="100%">
+			<option value="AU">Australia</option>
+			<option value="CN">China</option>
+			<option value="DN">Denmark</option>
+			<option value="HK">Hong Kong</option>
+			<option value="IN">India</option>
+			<option value="ID">Indonesia</option>
+			<option value="JP">Japan</option>
+			<option value="KR">Korea</option>
+			<option value="NZ">New Zealand</option>
+			<option value="PH">Philippines</option>
+			<option value="SG">Singapore</option>
+			<option value="TH">Thailand</option>
+			<option value="UK">United Kingdom</option>
+			<option value="US">United States</option>
+			<option value="VN">Vietnam</option>
+			</select></td>
+		</tr></table>
+		<table id="travel2" class="travel" width="90%"><tr>
+			<td width="50%">From <input id="dtFrom" type="date" ></td>
+			<td width="50%">To <input id="dtTo" type="date" ></td>
+		</tr></table> 
+		
+		<p class="pgTitle"><span class="pgTitleRed">IN CASE</span> WE NEED TO CONTACT YOU:</p>
+		<p class="font-small" style="vertical-align:center">
+		<input id="mobile" type="text" width="50" style="background-image:url(img/phone_icon.png);
+				background-repeat:no-repeat; background-position:6px;padding-left:40px;" value="+60126515150"> </p> 
+		
+		<p class="pgTitle"><span class="pgTitleRed">WHILE I AM</span> OVERSEAS:</p>
+		<table id="msgHeader" class="travel">
+		<tr>
+			<td width="70%">I will be Using My Debit Card</td>
+			<td width="20%">
+			<select id="flipT1" name="flipT1" data-role="slider">
+		        <option value="off">Off</option>
+		        <option value="on">On</option>
+		    </select>
+			</td>
+		</tr><tr>
+			<td width="70%">I will be Using My Credit Card</td>
+			<td width="20%">
+			<select id="flipT2" name="flipT2" data-role="slider">
+		        <option value="off">Off</option>
+		        <option value="on">On</option>
+		    </select>
+			</td>
+		</tr>
+		</table>
+		<a data-rel="popup" data-role="button" href="#saveTravel" class="ui-btn ui-corner-all" onclick="
+			if (window.document.getElementById('dtFrom').value == '' || window.document.getElementById('dtTo').value == ''){
+				window.document.getElementById('saveTravelMsg').innerHTML = 'Please complete the dates before you save & submit.';
+			}else{
+				window.document.getElementById('saveTravelMsg').innerHTML = 'Your travel itinerary and preferences have been saved.<br/>Have a safe journey!';
+			}
+			window.document.getElementById('saveTravel').style.display = 'block';
+		">Save</a>
+		<div id="saveTravel" class="ui-corner-all" style="display:none;position: absolute; top:250px; left:10px; width:85%; background-color:lightGray; padding:15px; text-align:center;font-weight:bold"><span id="saveTravelMsg">Your travel itinerary and preferences have been saved.<br/>Have a safe journey!</span>
+		<a data-role="button" href="#" class="ui-btn ui-corner-all" onclick="
+			window.document.getElementById('saveTravel').style.display = 'none';
+		">OK</a>
+		</div>
+    </div>
+	
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		 <li><a href="#deal" data-icon="star" >Deals</a></li>
+		 <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		 <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+<!-- Deal page -->
+<div data-role="page" id="deal">
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - Deals</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+            <a data-icon="bars" data-iconpos="notext" data-role="button" href="#menuPanelD">Menu</a>
+        </div>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---  Menu ------>
+	<div data-role="panel" id="menuPanelD" data-display="overlay">
+    <p class="titleSmall" style="padding-bottom:10pt"><img class="icon" src="img/icare_icon.png" />  iCare</p> 
+    <ul data-role="listview">
+		<li><a href="#myAccount">Menu 1</a></li>
+		<li><a href="#mobileCash">Menu 2</a></li>
+		<li><a href="#nearestBr" onclick="
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();">Menu 3 (Google Map)</a></li>
+		<li><a href="#setupAppointment">Setup Appointment</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#loginPage">Logout</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Terms of Usage</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Privacy Policy</a></li>
+    </ul>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content">
+		<ul data-role="listview" data-inset="true">
+		<li><a href="#">
+			<img src="http://deals.bigsale.com.my/images/deals/561631/premium-fresh-healthy-juices-people-deal-250-250.jpg" class="deal" />
+			<h2 class="wrap">Get 20% Off at Healthy Juice</h2>
+		</a></li>
+		<li><a href="#">
+			<img src="http://deals.bigsale.com.my/images/deals/561084/RM50-Cash-Vouchers-at-Luscious-By-Lisa-T-250-250.jpg" class="deal" />
+			<h2 class="wrap">Free Cup Cakes in December!</h2>
+		</a></li>
+		<li><a href="#">
+			<img src="http://deals.bigsale.com.my/images/deals/561234/3-hour-sunset-cruise-adults-children-deal-250-250.jpg" class="deal" />
+			<h2 class="wrap">Complimentary Sunset Cruise</h2>
+		</a></li>
+		<li><a href="#">
+			<img src="http://deals.bigsale.com.my/images/deals/560543/langkawi-2d1n-stay-deluxe-room-breakfast-people-deal-250-250.jpg" class="deal" />
+			<h2 class="wrap">Free 1 Night Stay @ Langkawi</h2>
+		</a></li>
+		<li><a href="#">
+			<img src="http://deals.bigsale.com.my/images/deals/558989/1-month-gym-membership-person-deal-250-250.jpg" class="deal" />
+			<h2 class="wrap">50% Off 1 Month Gym Access</h2>
+		</a></li>
+		<li><a href="#">
+			<img src="http://deals.bigsale.com.my/images/deals/561089/Universal-Studios-Singapore-1-Day-E-Ticket-Pass-for-1-Adult-Age-13-and-above-250-250.jpg" class="deal" />
+			<h2 class="wrap">Universal Studio Package for 4</h2>
+		</a></li>
+		</ul>
+    </div>
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		  <li><a href="#deal" data-icon="star" >Deals</a></li>
+		  <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		  <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+<!-- MyMessage page -->
+<div data-role="page" id="message">
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - My Messages</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+            <a data-icon="bars" data-iconpos="notext" data-role="button" href="#menuPanelM">Menu</a>
+        </div>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---  Menu ------>
+	<div data-role="panel" id="menuPanelM" data-display="overlay">
+    <p class="titleSmall" style="padding-bottom:10pt"><img class="icon" src="img/icare_icon.png" /> iCare</p> 
+    <ul data-role="listview">
+		<li><a href="#myAccount">Menu 1</a></li>
+		<li><a href="#mobileCash">Menu 2</a></li>
+		<li><a href="#nearestBr" onclick="
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();">Menu 3 (Google Map)</a></li>
+		<li><a href="#setupAppointment">Setup Appointment</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#loginPage">Logout</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Terms of Usage</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Privacy Policy</a></li>
+    </ul>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content">
+	<a href="#" class="ui-btn ui-corner-all" onclick="pushMsg()">Secure Message Box</a>
+	<table id="msgHeader" class="msg"><tr>
+		<th width="10%">&nbsp;&nbsp;&nbsp;</th>
+		<th width="20%">&nbsp;&nbsp;&nbsp;Date</th>
+		<th width="70%">Subject</th>
+	</tr></table>
+	<div id="msg1" style="display:block"><table class="msg"><tr>
+		<td width="10%"><a href="#message" data-icon="delete" data-iconpos="notext" data-role="button" onClick="
+		window.document.getElementById('msg1').style.display = 'none';
+		">Delete</a></td>
+		<td width="20%">04 Oct 17</td>
+		<td width="70%"><a href="#" >Scheduled Maintenance from 11pm, 10 Oct 17 to 4am, 11 Oct 17</a></td>
+	</tr></table></div>
+	<div id="msg2" style="display:block"><table class="msg"><tr>
+		<td width="10%"><a href="#message" data-icon="delete" data-iconpos="notext" data-role="button" onClick="
+		window.document.getElementById('msg2').style.display = 'none';
+		">Delete</a></td>
+		<td width="20%">12 Oct 17</td>
+		<td width="70%"><a href="#" >Launch of new MDC iCare App!</a></td>
+	</tr></table></div>
+	<div id="msg3" style="display:block"><table class="msg"><tr>
+		<td width="10%"><a href="#message" data-icon="delete" data-iconpos="notext" data-role="button" onClick="
+		window.document.getElementById('msg3').style.display = 'none';
+		">Delete</a></td>
+		<td width="20%">14 Oct 17</td>
+		<td width="70%"><a href="#" >Your Billing for month of Jan 2018</a></td>
+	</tr></table></div>
+	<div id="msg4" style="display:block"><table class="msg"><tr>
+		<td width="10%"><a href="#message" data-icon="delete" data-iconpos="notext" data-role="button" onClick="
+		window.document.getElementById('msg4').style.display = 'none';
+		">Delete</a></td>
+		<td width="20%">15 Oct 17</td>
+		<td width="70%"><a href="#" >Re: Your Enquiry on iCare App</a></td>
+	</tr></table></div>
+	<div id="msg5" style="display:block"><table class="msg"><tr>
+		<td width="10%"><a href="#message" data-icon="delete" data-iconpos="notext" data-role="button" onClick="
+		window.document.getElementById('msg5').style.display = 'none';
+		">Delete</a></td>
+		<td width="20%">20 Oct 17</td>
+		<td width="70%"><a href="#" >Revised Despatch fee effective 1st Feb 2018</a></td>
+	</tr></table></div>
+	<div id="msg6" style="display:block"><table class="msg"><tr>
+		<td width="10%"><a href="#message" data-icon="delete" data-iconpos="notext" data-role="button" onClick="
+		window.document.getElementById('msg6').style.display = 'none';
+		">Delete</a></td>
+		<td width="20%">03 Nov 17</td>
+		<td width="70%"><a href="#" >Appointment booked for 20 Jan 2018 @ 10:00 AM</a></td>
+	</tr></table></div>
+	<!-- spare for queue ticket counter -->
+	<div id="msg7" style="display:none"><table class="msg"><tr>
+		<td width="10%"><a href="#message" data-icon="delete" data-iconpos="notext" data-role="button" onClick="
+		window.document.getElementById('msg7').style.display = 'none';
+		">Delete</a></td>
+		<td width="20%">24 Nov 17</td>
+		<td width="70%"><a href="#" >Your queue ticket number for <span id="msgBrTitle7"></span></a></td>
+	</tr></table></div>
+	<div id="msg8" style="display:none"><table class="msg"><tr>
+		<td width="10%"><a href="#message" data-icon="delete" data-iconpos="notext" data-role="button" onClick="
+		window.document.getElementById('msg8').style.display = 'none';
+		">Delete</a></td>
+		<td width="20%">24 Nov 17</td>
+		<td width="70%"><a href="#" >Your queue ticket number for <span id="msgBrTitle8"></span></a></td>
+	</tr></table></div>
+	</div>
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		 <li><a href="#deal" data-icon="star" >Deals</a></li>
+		 <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		 <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+<!-- Setting Page -->
+<div data-role="page" id="settingPage">
+	<div data-role="header" data-position="fixed" data-theme="a">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - Settings</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+            <a data-icon="bars" data-iconpos="notext" data-role="button" href="#menuPanelS">Menu</a>
+        </div>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---  Menu ------>
+	<div data-role="panel" id="menuPanelS" data-display="overlay">
+    <p class="titleSmall" style="padding-bottom:10pt"><img class="icon" src="img/icare_icon.png" />  iCare </p>
+    <ul data-role="listview">
+		<li><a href="#myAccount">Menu 1</a></li>
+		<li><a href="#mobileCash">Menu 2</a></li>
+		<li><a href="#nearestBr" onclick="
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();">Menu 3 (Google Map)</a></li>
+		<li><a href="#setupAppointment">Setup Appointment</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#loginPage">Logout</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Terms of Usage</a></li>
+		<li><a data-icon="arrow-r" data-role="button" href="#">Privacy Policy</a></li>
+    </ul>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content">
+	<!-- <a href="#" class="ui-btn ui-corner-all">Settings</a> -->
+	<table id="msgHeader" class="msg"><tr>
+		<td width="70%">Allow PopUp Notification</td>
+		<td width="20%">
+	    <select id="flip1" name="flip1" data-role="slider">
+	        <option value="off">Off</option>
+	        <option value="on">On</option>
+	    </select>
+		</td>
+	</tr><tr>
+		<td width="70%">Allow Location Tracker</td>
+		<td width="20%">
+	    <select id="flip2" name="flip2" data-role="slider">
+	        <option value="off">Off</option>
+	        <option value="on">On</option>
+	    </select>
+		</td>
+	</tr><tr>
+		<td width="70%">Allow Schedule Expenses Notification</td>
+		<td width="20%">
+	    <select id="flip3" name="flip3" data-role="slider">
+	        <option value="off">Off</option>
+	        <option value="on">On</option>
+	    </select>
+		</td>
+	</tr>
+	</table>
+    </div>
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		 <li><a href="#deal" data-icon="star" >Deals</a></li>
+		 <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		 <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+<!-- Phone Dialing Page -->
+<div data-role="page" id="phoneDial" data-theme="a"  style="background-color:black">
+	<!---- Content --->
+    <div role="main" class="ui-content" >
+	<a href="#" class="ui-btn ui-corner-all">Dialing</a>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p align="center"><img src="img/phoneCalling.png" height="150" width="150"></p>
+	<p style="text-align:center; font-weight:bold;color:white"><span id="phoneNum">+603 2875 6243</span></p>
+	<p>&nbsp;</p>
+	<p align="center"><a href="#nearestBr" >
+	<img src="img/phoneEndCall.jpg"></p>
+    </a></div>
+	
+</div>
+<!-- /page -->
+
+<!-- Branch Get Ticket Page -->
+<div data-role="page" id="getTicket">
+	<div data-role="header" data-position="fixed" data-theme="a" data-add-back-btn="true">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - Nearest Branch</p>	
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content" >
+	<div class="ui-btn ui-corner-all">Queue Ticket</div>
+	<p>&nbsp;</p>
+	<p align="center" class="font-small"><b>Branch: </b><span id="brName" class="pgTitleRed"></span></p>
+	<p align="center">
+	<table border="0" padding="0"><tr>
+	<td width="25%" class="blue"><a href="#" class="ui-corner-all ui-btn"><h1 id="ctq1">1</h1></a></td>
+	<td width="25%" class="blue"><a href="#" class="ui-corner-all ui-btn"><h1 id="ctq2">3</h1></a></td>
+	<td width="25%" class="blue"><a href="#" class="ui-corner-all ui-btn"><h1 id="ctq3">5</h1></a></td>
+	<td width="25%" class="blue"><a href="#" class="ui-corner-all ui-btn"><h1 id="ctq4">0</h1></a></td>
+	</tr></table>
+	</p>
+	<p class="font-small" style="text-align:center;"><b>Estimated Time till Served: </b><span class="pgTitleRed" id="brMin">15 mins</span><br/><br/>
+	<span id="queueReminderTxt">Please ensure you will arrive in time at the branch. See you later!</span></p>
+	<p>&nbsp;</p>
+	<a href="#" class="ui-btn ui-corner-all" onclick="
+	if (window.document.getElementById('brName').innerText == 'KL Main'){
+		if (window.document.getElementById('msgBrTitle7').innerText == 'OCBC KL Main - ' + tktKLM){
+			window.document.getElementById('msg7').style.display = 'none';
+		}else if (window.document.getElementById('msgBrTitle8').innerText == 'OCBC KL Main - ' + tktKLM){
+			window.document.getElementById('msg8').style.display = 'none';
+		}
+		if (window.document.getElementById('ctq1').innerText != '2'){
+			tktKLM = tktKLM - 1;
+			waitTimeKLM = waitTimeKLM - 3;
+			noCustKLM = noCustKLM - 1;
+			window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+		}else{
+			tktKLM2 = tktKLM2 - 1;
+			waitTimeKLM2 = waitTimeKLM2 - 15;
+			noCustKLM2 = noCustKLM2 - 1;
+			window.document.getElementById('klmQueue').innerText = noCustKLM2.toString();
+		}
+	}else{
+		if (window.document.getElementById('msgBrTitle7').innerText == 'OCBC Jln Ampang - ' + tktAMP){
+			window.document.getElementById('msg7').style.display = 'none';
+		}else if (window.document.getElementById('msgBrTitle8').innerText == 'OCBC Jln Ampang - ' + tktAMP){
+			window.document.getElementById('msg8').style.display = 'none';
+		}
+		if (window.document.getElementById('ctq1').innerText != '2'){
+			tktAMP = tktAMP - 1;
+			waitTimeAMP = waitTimeAMP - 3;
+			noCustAMP = noCustAMP - 1;
+			window.document.getElementById('ampQueue').innerText = noCustAMP.toString();
+		}else{
+			tktAMP2 = tktAMP2 - 1;
+			waitTimeAMP2 = waitTimeAMP2 - 15;
+			noCustAMP2 = noCustAMP2 - 1;
+			window.document.getElementById('ampQueue').innerText = noCustAMP2.toString();
+		}
+	};
+	window.document.getElementById('brMin').innerText = 'N/A';
+	window.document.getElementById('queueReminderTxt').innerText = 'Your queue ticket has been cancelled';
+	window.document.getElementById('ctq1').innerText = '-';
+	window.document.getElementById('ctq2').innerText = '-';
+	window.document.getElementById('ctq3').innerText = '-';
+	window.document.getElementById('ctq4').innerText = '-';
+	">Cancel Ticket</a>
+	<p align="left" class="font-small-i-b">Terms & Conditions:</p>
+	<p align="left" >
+		<ol class="font-small-i-b"><li>Please be at the branch's banking hall to refer to the queue ticket number for latest status.</li>
+		<li>Your number will be skip if you are not present at the time it is called</li></ol>
+		</p>
+	</div>
+	
+</div>
+<!-- /page -->
+
+<!-- Mobile Cash PIN Page -->
+<div data-role="page" id="mcashPin">
+	<div data-role="header" data-position="fixed" data-theme="a" data-add-back-btn="true">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - Mobile Cash</p>	
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content" >
+	<a href="#" class="ui-btn ui-corner-all">Mobile Cash Withdrawal Pass</a>
+	<p align="center" class="font-small"><b>Branch / Location: </b><span id="mcashLocation" class="pgTitleRed"></span></p>
+	<p align="center">
+	<table border="0" padding="0"><tr>
+	<td width="12%" class="green"><a href="#" class="ui-corner-all ui-btn"><h1 id="mctq1">1</h1></a></td>
+	<td width="12%" class="green"><a href="#" class="ui-corner-all ui-btn"><h1 id="mctq2">3</h1></a></td>
+	<td width="12%" class="green"><a href="#" class="ui-corner-all ui-btn"><h1 id="mctq3">5</h1></a></td>
+	<td width="12%" class="green"><a href="#" class="ui-corner-all ui-btn"><h1 id="mctq4">6</h1></a></td>
+	<td width="12%" class="green"><a href="#" class="ui-corner-all ui-btn"><h1 id="mctq5">4</h1></a></td>
+	<td width="12%" class="green"><a href="#" class="ui-corner-all ui-btn"><h1 id="mctq6">1</h1></a></td>
+	</tr></table>
+	</p>
+	<p class="font-small" style="text-align:center;"><b>Valid for Amount (MYR): </b><span class="pgTitleRed" id="mcashAmt">150</span><br/><br/>
+	<span id="queueReminderTxt"><ol>
+		<li>Please proceed to the location & enter the passcode into ATM/Cashier terminal.</li>
+		<li>If the passcode is valid, you will be prompted to authenticate with your PIN number.</li>
+		<li>Enter your PIN to authenticate, once successful cash will be dispense for you.</li>
+		</ol></span></p>
+	<!-- <a href="#" class="ui-btn ui-corner-all" onclick="
+	if (window.document.getElementById('brName').innerText == 'KL Main'){
+		if (window.document.getElementById('msgBrTitle7').innerText == 'OCBC KL Main - ' + tktKLM){
+			window.document.getElementById('msg7').style.display = 'none';
+		}else if (window.document.getElementById('msgBrTitle8').innerText == 'OCBC KL Main - ' + tktKLM){
+			window.document.getElementById('msg8').style.display = 'none';
+		}
+		tktKLM = tktKLM - 1;
+		waitTimeKLM = waitTimeKLM - 3;
+		noCustKLM = noCustKLM - 1;
+		window.document.getElementById('klmQueue').innerText = noCustKLM.toString();
+		
+	}else{
+		if (window.document.getElementById('msgBrTitle7').innerText == 'OCBC Jln Ampang - ' + tktAMP){
+			window.document.getElementById('msg7').style.display = 'none';
+		}else if (window.document.getElementById('msgBrTitle8').innerText == 'OCBC Jln Ampang - ' + tktAMP){
+			window.document.getElementById('msg8').style.display = 'none';
+		}
+		tktAMP = tktAMP - 1;
+		waitTimeAMP = waitTimeAMP - 3;
+		noCustAMP = noCustAMP - 1;
+		window.document.getElementById('ampQueue').innerText = noCustAMP.toString();
+	};
+	window.document.getElementById('brMin').innerText = 'N/A';
+	window.document.getElementById('queueReminderTxt').innerText = 'Your queue ticket has been cancelled';
+	window.document.getElementById('ctq1').innerText = '-';
+	window.document.getElementById('ctq2').innerText = '-';
+	window.document.getElementById('ctq3').innerText = '-';
+	window.document.getElementById('ctq4').innerText = '-';
+	">Cancel Ticket</a> -->
+	<p align="left" class="font-small"><b><u>Terms & Conditions:</u></b></p>
+	<p align="left" >
+		<ol class="font-small"><li>Passcode will be valid for only 15 mins.</li>
+		<li>Your account will be lock after 3 unsuccessful attempt.  Please call OCBC Customer Service to reactivate. </li></ol>
+		</p>
+	</div>
+	
+</div>
+<!-- /page -->
+
+<!-- All branches Page -->
+<div data-role="page" id="allBranches">
+	<div data-role="header" data-position="fixed" data-theme="a" data-add-back-btn="true">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - Branches Network</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+
+	<!-- content -->
+    <div role="main" class="ui-content">
+	
+	<ul data-role="listview" data-filter="true" class="ui-mini">
+        <li><div class="brTitle">Ampang</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+603 4264 1850';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">Menara Great Eastern, No.303 Jalan Ampang, 50450 Kuala Lumpur</div>
+		</li>
+        <li><div class="brTitle">Alor Setar</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+604 774 7618';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">209, Jalan Gangsa, Kawasan Perusahaan Mergong 2, 05150 Alor Setar, Kedah</div>
+		</li>
+		<li><div class="brTitle">Batu Bahat</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+607 436 7550';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">108-2 Jalan Rahmat, 83000 Batu Pahat, Johor</div>
+		</li>
+		<li><div class="brTitle">Bukit Damansara</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+603 2091 1888';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">19 Jalan Setiapuspa, Bukit Damansara, 50490 Kuala Lumpur</div>
+		</li>
+		<li><div class="brTitle">Bukit Mertajam</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+604 537 7337';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">No. 47, 49, 51 & 53, Jalan Perniagaan Gemilang 1, Pusat Perniagaan Gemilang, 14000 Bukit Mertajam, Pulau Pinang</div>
+		</li>
+		<li><div class="brTitle">Cheras</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+603 9145 3611';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">No. 1, 3, 5 & 7 Jalan Damai Niaga, Alam Damai, Cheras 56000 Kuala Lumpur</div>
+		</li>
+		<li><div class="brTitle">Ipoh</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+605 208 6350';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">2 Jalan Dato Maharaja Lela, 30000 Ipoh, Perak</div>
+		</li>
+		<li><div class="brTitle">Johor Bahru</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+607 223 3223';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">1 Jalan Ibrahim, 80000 Johor Bahru</div>
+		</li>
+		<li><div class="brTitle">Kajang</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+603 8913 1954';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">4 & 5 Jalan Raja Haroun, 43000 Kajang, Selangor</div>
+		</li>
+		<li><div class="brTitle">Kepong</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+603 6252 2228';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">60 Vista Magna, Jalan Prima, Metro Prima Kepong, 52100 Kuala Lumpur</div>
+		</li>
+		<li><div class="brTitle">Klang</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+603 3375 8828';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">19 Jalan Stesen, 41000 Klang, Selangor</div>
+		</li>
+		<li><div class="brTitle">Kluang</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+607 778 7550';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">8A Jalan Dato' Haji Hassan, 86000 Kluang, Johor</div>
+		</li>
+		<li><div class="brTitle">KL Main</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+603 2034 5148';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">Mezzanine Floor, Menara OCBC, 18 Jalan Tun Perak, 50050 Kuala Lumpur</div>
+		</li>
+		<li><div class="brTitle">Kulai Jaya</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+607 661 8788';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">202, 203 & 204 Jalan Kenanga 29/2, Bandar Indapura, Kulaijaya, 81000, Johor</div>
+		</li>
+		<li><div class="brTitle">Kota Bahru</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+609 747 4503';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Sun - Thu:<br/>Banking Hour:</b> 09:30-16:30<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">3940, Jalan Temenggong, 15000 Kota Bharu, Kelantan</div>
+		</li>
+		<li><div class="brTitle">Kota Kemuning</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+603 5123 5216';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">27, Jalan Anggerik Vanilla BF 31/BF, Business Park 3, Kota Kemuning, 40460 Shah Alam, Selangor</div>
+		</li>
+		<li><div class="brTitle">Melaka</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+606 281 3111';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>7-Day Banking Hour:</b> 09:30-18:00<br/><b>Personal Banking:</b> 09:30-19:00</div></p>
+			<div class="font-small wrap">Lot FG001 Ground Floor, Dataran Pahlawan Melaka Megamall, Jalan Merdeka, 75000 Bandar Hilir, Melaka</div>
+		</li>
+		<li><div class="brTitle">Muar</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+606 956 3639';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">26 Jalan Maharani, 84000 Muar, Johor</div>
+		</li>
+		<li><div class="brTitle">Penang</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+604 262 6000';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">36 Lebuh Pantai, 10300 Pulau Pinang</div>
+		</li>
+		<li><div class="brTitle">Petaling Jaya</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+603 7719 9688';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">89, 91 & 93 Jalan SS21/60, Damansara Utama, 47400 Petaling Jaya, Selangor</div>
+		</li>
+		<li><div class="brTitle">Puchong</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+603 8064 7000';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">GF 2 & 3, 1F 1 & 2, Tower 2 @ PFCC, Jalan Puteri 1/2, Bandar Puteri, 47100, Puchong, Selangor</div>
+		</li>
+		<li><div class="brTitle">Seremban</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+606 762 8100';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">63-65 Jalan Dato Bandar Tunggal, 70000 Seremban, Negeri Sembilan</div>
+		</li>
+		<li><div class="brTitle">Skudai</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+607 555 8809';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">No 143 & 145, Jalan Sutera Tanjung 8/2 Taman Sutera Utama 81300 Skudai, Johor</div>
+		</li>
+		<li><div class="brTitle">Subang Jaya</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+603 8022 6200';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Banking Hour:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00</div></p>
+			<div class="font-small wrap">1A-A - 4A-A, Jalan USJ 10/1A, Pusat Perniagaan USJ 10, 47610 UEP Subang Jaya, Selangor</div>
+		</li>
+		<li><div class="brTitle">Taman Molek</div>
+			<p class="ui-li-aside"><a href="#phoneDial" data-role="button" data-icon="phone" data-iconpos="notext" onclick="window.document.getElementById('phoneNum').innerText = '+607 356 4338';">Phone</a></p>
+			<p class="font-small"><div class="brHour"><b>Weekday Banking:</b> 09:30-16:00<br/><b>Personal Banking:</b> 09:30-17:00<br/><br/><b>Weekend Banking:</b> 10:00-16:00</div></p>
+			<div class="font-small wrap">47 & 49 Jalan Molek 1/29, Taman Molek, 81100 Johor</div>
+		</li>
+    </ul>
+    </div>
+	
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		 <li><a href="#deal" data-icon="star" >Deals</a></li>
+		 <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		 <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+<!-- View Scheduled Expenses page -->
+<div data-role="page" id="viewScheduleExp">
+	<div data-role="header" data-position="fixed" data-theme="a" data-add-back-btn="true">
+		<p class="titleSmall"><img class="icon" src="img/icare_icon.png" /> iCare - Scheduled Expenses</p>
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+            <a data-icon="gear" data-iconpos="notext" data-role="button" href="#settingPage">Settings</a>
+        </div>
+	</div>
+	<!---- Content --->
+    <div role="main" class="ui-content">
+	<p class="pgTitle"><span class="pgTitleRed">SCHEDULED EXPENSES</span> BY MONTH</p>
+	<div data-role="collapsibleset" data-theme="a" class="ui-mini">
+		<div data-role="collapsible" data-theme="a" data-content-theme="a">
+		<h2>November 2017</h2>
+		    <ul data-role="listview" id="novExp">
+		        <li><b>15/Nov/2017</b> - Car Loan <p class="ui-li-aside" style="font-size:9pt">MYR 400</p></li>
+		        <li><b>20/Nov/2017</b> - Security Fees <p class="ui-li-aside" style="font-size:9pt">MYR 250</p></li>
+				<li style="display:none" id='novExp1'><b><span id="novDt1"></span></b> - <span id="novDesc1"></span> <p class="ui-li-aside" style="font-size:9pt">MYR <span id="novAmt1"></span></p></li>
+				<li style="display:none" id='novExp2'><b><span id="novDt2"></span></b> - <span id="novDesc2"></span> <p class="ui-li-aside" style="font-size:9pt">MYR <span id="novAmt2"></span></p></li>
+				<li style="display:none" id='novExp3'><b><span id="novDt3"></span></b> - <span id="novDesc3"></span> <p class="ui-li-aside" style="font-size:9pt">MYR <span id="novAmt3"></span></p></li>
+				<li style="display:none" id='novExp4'><b><span id="novDt4"></span></b> - <span id="novDesc4"></span> <p class="ui-li-aside" style="font-size:9pt">MYR <span id="novAmt4"></span></p></li>
+				<li style="display:none" id='novExp5'><b><span id="novDt5"></span></b> - <span id="novDesc5"></span> <p class="ui-li-aside" style="font-size:9pt">MYR <span id="novAmt5"></span></p></li>
+		    </ul>
+		</div>
+		<div data-role="collapsible" data-theme="a" data-content-theme="a">
+		<h2>December 2017</h2>
+		    <ul data-role="listview" id="decExp">
+		        <li><b>15/Dec/2017</b> - Car Loan <p class="ui-li-aside" style="font-size:9pt">MYR 400</p></li>
+		        <li><b>20/Dec/2017</b> - Security Fees <p class="ui-li-aside" style="font-size:9pt">MYR 250</p></li>
+				<li><b>21/Dec/2017</b> - Christmas Gifts <p class="ui-li-aside" style="font-size:9pt">MYR 300</p></li>
+				<li style="display:none" id='decExp1'><b><span id="decDt1"></span></b> - <span id="decDesc1"></span> <p class="ui-li-aside" style="font-size:9pt">MYR <span id="decAmt1"></span></p></li>
+				<li style="display:none" id='decExp2'><b><span id="decDt2"></span></b> - <span id="decDesc2"></span> <p class="ui-li-aside" style="font-size:9pt">MYR <span id="decAmt2"></span></p></li>
+				<li style="display:none" id='decExp3'><b><span id="decDt3"></span></b> - <span id="decDesc3"></span> <p class="ui-li-aside" style="font-size:9pt">MYR <span id="decAmt3"></span></p></li>
+				<li style="display:none" id='decExp4'><b><span id="decDt4"></span></b> - <span id="decDesc4"></span> <p class="ui-li-aside" style="font-size:9pt">MYR <span id="decAmt4"></span></p></li>
+				<li style="display:none" id='decExp5'><b><span id="decDt5"></span></b> - <span id="decDesc5"></span> <p class="ui-li-aside" style="font-size:9pt">MYR <span id="decAmt5"></span></p></li>
+		    </ul>
+		</div>
+	</div>
+    </div>
+	
+	<!-- footer -->
+	<footer data-role="footer" class="ui-body-c" data-position="fixed">
+		<div data-role="navbar" >
+		<ul>
+		 <li><a href="#deal" data-icon="star" >Deals</a></li>
+		 <li><a href="#message" data-icon="mail" >My Messages</a></li>
+		 <li><a href="http://www.mdx.com.my" data-icon="arrow-r" data-rel="external" >Go to Website</a></li>
+		</ul>
+		</div>
+	</footer>
+</div>
+<!-- /page -->
+
+</body>
+</html>
