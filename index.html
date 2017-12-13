@@ -25,7 +25,7 @@
 	
 	function pushMsg(){
 		//trigger Firebase push message
-		var push = PushNotification.init({ "android": {"senderID": 526751421365 );
+		var push = PushNotification.init({ "android": {"senderID": "526751421365" );
 		push.on('registration', function(data) {
 		// data.registrationId
 		});push.on('notification', function(data) {
@@ -42,7 +42,8 @@
 	}
 	
 	function onDeviceReady() {
-		 var push = PushNotification.init({ "android": {"senderID": 526751421365}});
+		 var push = PushNotification.init({ "android": {"senderID": "526751421365"}});
+		 alert("senderID: 526751421365");
 		 push.on('registration', function(data) {
 		 alert('Your Registration ID: ' + data.registrationId);
 		 });
