@@ -4,9 +4,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 <!-- for Firebase web API -->
 <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
-<script src="cordova.js"></script>
 <script>
 	var detectPlatform = window.navigator.userAgent;
+	alert(detectPlatform);
 	if(detectPlatform.indexOf('Android') > 0 || detectPlatform.indexOf('Mobile') > 0){
 		//PhoneGap push messaging
          document.addEventListener("deviceready",onDeviceReady,false);
