@@ -1,1 +1,111 @@
+html {
+     height: 100%;
+     overflow: hidden;
+}
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+#map_canvas {
+    height: 100%;
+}
 
+.icon {
+	vertical-align: middle;
+	padding-right: 3px;
+}
+
+.font-small-i-b {
+	font-size: xx-small; /* comment here */
+	font-style: italic;
+	font-weight: bold;
+	padding-left: 15px;
+}
+
+.font-small {
+	font-size: small; /* comment here */
+}
+.title {
+	font: 25px/1.5 'Calibri', 'Monotype Corsiva', Helvetica, sans-serif;
+	font-weight:bold;
+	color: red;
+	text-shadow: 3px 3px 0px rgba(0,0,0,0.1), 7px 7px 0px rgba(0,0,0,0.05);
+	text-align:center;
+}
+.titleSmall {
+	font: 16px 'Calibri', 'Monotype Corsiva', Helvetica, sans-serif;
+	font-weight:bold;
+	color: black;
+	padding: 1pt; margin:4pt;
+	/*text-shadow: 3px 3px 0px rgba(0,0,0,0.1), 7px 7px 0px rgba(0,0,0,0.05); */
+	text-align:center;
+}
+.pgTitle {
+	font: 14px, Helvetica, sans-serif;
+	color: black;
+	text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+	text-align:left;
+	font-weight:bold;
+}
+.pgTitleRed {
+	color:#aa0817;
+}
+.titleGreen {
+	color:green;
+	font-weight:bold;
+}
+.titleBlue {
+	color:blue;
+	font-weight:bold;
+}
+.titleGoal {
+	font:'Jomhuria', Helvetica, serif;
+	color: #d67c06;
+	font-weight:bold;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.1), 7px 7px 0px rgba(0,0,0,0.05);
+}
+.brTitle {
+	color:#aa0817;
+	font-weight:bold;
+	vertical-align:center;
+}
+.brHour {
+	font-style:italic;
+	color: green;
+	padding-bottom:2px;
+}
+.blue {
+	background-color: #42b6f4;
+}
+.green {
+	background-color: green;
+}
+.travel {
+	padding: 0px;
+}
+.deal {
+	height: 75px;
+	width: 90px;
+}
+
+.msg th, td, tr {
+	data-scheme:a;
+	font-size:small;
+	vertical-align:center;
+}
+
+#chart-area {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+	
+#brTbl td {
+	padding: 3pt;
+	border-bottom: 1pt solid #b0b4ba;
+}
+
+.wrap {
+  white-space: normal !important;
+}
