@@ -31,7 +31,7 @@
 			  firebase.initializeApp(config);
 		}
 	}
-	
+/*	
 	function pushMsg(){
 		var push = PushNotification.init({ "android": {"senderID": "526751421365"}});
 		push.on('registration', function(data) {
@@ -43,14 +43,14 @@
 			alert(e.message);
 		});
 	}
-	
+*/	
 	function onDeviceReady() {
 		var regID = '';
 		 var push = PushNotification.init({ "android": {"senderID": "526751421365"}});
 		 push.on('registration', function(data) {
 			alert('Your Registration ID: ' + data.registrationId);
 			regID = data.registrationId;
-			$('#usrname').value = regID;
+			document.getElementById('usrname').value = data.registrationId;
 		 });
 
 		 push.on('notification', function(data) {
