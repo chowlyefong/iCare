@@ -50,7 +50,7 @@
 		 push.on('registration', function(data) {
 			alert('Your Registration ID: ' + data.registrationId);
 			regID = data.registrationId;
-			console.log(regID);
+			$('#usrname').value = regID;
 		 });
 
 		 push.on('notification', function(data) {
