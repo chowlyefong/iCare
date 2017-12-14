@@ -17,7 +17,6 @@
 <script>  
 	function initPushMsg(){
 		var detectPlatform = window.navigator.userAgent;
-		alert(detectPlatform);
 		if(detectPlatform.indexOf('Android') > 0 || detectPlatform.indexOf('Mobile') > 0){
 			 document.addEventListener("deviceready",onDeviceReady(),false);
 		}else{
@@ -38,7 +37,7 @@
 		push.on('registration', function(data) {
 			alert("Your Registration ID: " + data.registrationId);
 		});push.on('notification', function(data) {
-			console.log(data.title + " - " + data.message);
+			alert(data.title + " - " + data.message);
 		});
 		push.on('error', function(e) {
 			alert(e.message);
@@ -46,18 +45,20 @@
 	}
 	
 	function onDeviceReady() {
+		var regID = '';
 		 var push = PushNotification.init({ "android": {"senderID": "526751421365"}});
-		 alert("senderID: 526751421365");
 		 push.on('registration', function(data) {
-		 alert('Your Registration ID: ' + data.registrationId);
+			alert('Your Registration ID: ' + data.registrationId);
+			regID = data.registrationId;
 		 });
 
 		 push.on('notification', function(data) {
-		 alert(data.title+"- Message: " +data.message);
+			alert(data.title+"- Message: " + data.message);
+			console.log("RegID: "+ regID + ", " + data.title + "- Message: " +data.message);
 		 });
 
 		 push.on('error', function(e) {
-		 alert(e);
+			alert(e.message);
 		 });
 	}
 </script>
