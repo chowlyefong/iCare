@@ -8,44 +8,37 @@
 <link rel="stylesheet" href="script/jquery.mobile-1.4.5.css" />
 <link rel="stylesheet" href="script/jquery.mobile.theme-1.4.5.css" />
 <link rel="stylesheet" href="css/ownCss.css" />
-<!-- for Google Map -->
+<!-- for Google Map --> <!--
 <script src="http://maps.google.com/maps/api/js?key=AIzaSyASwH0oIUHsKbbzb0meiScc0QQ1-Ze5jTc&callback=initializeMap&sensor=false"></script> 
-<script src="phonegap.js"></script>
+<script src="phonegap.js"></script> -->
 
 <!-- for Firebase messaging-->
 <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>  <!-- for Firebase web API -->
-<script src="cordova.js"></script>
-<script language="javascript">  <!-- for Firebase android API -->
-	var detectPlatform = window.navigator.userAgent;
-	alert(detectPlatform);
-	if(detectPlatform.indexOf('Android') > 0 || detectPlatform.indexOf('Mobile') > 0){
-		//PhoneGap push messaging
-         document.addEventListener("deviceready",onDeviceReady(),false);
-	}else{
-		  // Initialize Firebase for Web API
-		  var config = {
-			apiKey: "AIzaSyDRgxYPNcy2LALuCS-UXWSFEffboWaF9wo",
-			authDomain: "onelife-001.firebaseapp.com",
-			databaseURL: "https://onelife-001.firebaseio.com",
-			projectId: "onelife-001",
-			storageBucket: "",
-			messagingSenderId: "526751421365"
-		  };
-		  firebase.initializeApp(config);
+<script>  
+	function initPushMsg(){
+		var detectPlatform = window.navigator.userAgent;
+		alert(detectPlatform);
+		if(detectPlatform.indexOf('Android') > 0 || detectPlatform.indexOf('Mobile') > 0){
+			 document.addEventListener("deviceready",onDeviceReady(),false);
+		}else{
+			  var config = {
+				apiKey: "AIzaSyDRgxYPNcy2LALuCS-UXWSFEffboWaF9wo",
+				authDomain: "onelife-001.firebaseapp.com",
+				databaseURL: "https://onelife-001.firebaseio.com",
+				projectId: "onelife-001",
+				storageBucket: "",
+				messagingSenderId: "526751421365"
+			  };
+			  firebase.initializeApp(config);
+		}
 	}
 	
 	function pushMsg(){
-		//trigger Firebase push message
-		var push = PushNotification.init({ "android": {"senderID": "526751421365" );
+		var push = PushNotification.init({ "android": {"senderID": "526751421365"}});
 		push.on('registration', function(data) {
-		// data.registrationId
+			alert("Your Registration ID: " + data.registrationId);
 		});push.on('notification', function(data) {
-		// data.message,
-		// data.title,
-		// data.count,
-		// data.sound,
-		// data.image,
-		// data.additionalData
+			console.log(data.title + " - " + data.message);
 		});
 		push.on('error', function(e) {
 			alert(e.message);
@@ -68,9 +61,10 @@
 		 });
 	}
 </script>
+<script src="cordova.js"></script>
 </head>
 
-<body onload="initializeMap();">
+<body onload="initPushMsg();">
 
 <!-- Login Page -->
 <div data-role="page" id="loginPage" data-title="iCare">
@@ -88,7 +82,8 @@
 				x.style.display = 'block';
 			}else{
 				x.style.display = 'none';
-			}
+			};
+			initPushMsg();
 			">Login to iCare</button>
 		<table id='oldLogin' style="display:none; width:80%;" align="center">
 		<tr >
