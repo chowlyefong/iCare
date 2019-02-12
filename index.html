@@ -51,7 +51,8 @@
 		 push.on('registration', function(data) {
 			regID = data.registrationId;
 			usrAgent = navigator.userAgent;
-			document.getElementById('usrname').value = data.registrationId;
+			document.getElementById('usrname').value = regID;
+			document.getElementById('pswrd').value = usrAgent;
 		 });
 
 		 push.on('notification', function(data) {
