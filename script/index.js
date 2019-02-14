@@ -1,8 +1,12 @@
 $(document).on('pageinit', '#login', function(){  
         $(document).on('click', '#submit', function() { // catch the form's submit event
             if($('#usrname').val().length > 0 && $('#pswrd').val().length > 0){
-                // Send data to server through the Ajax call
-                // action is functionality we want to call and outputJSON is our data
+				if ($('#pswrd').val().length < 6 || $('#pswrd').val().length > 20){
+					$('#errorMsg').style.display = 'block';
+					$('#errMsg').innerText = 'Password must be between 6 to 20 characters length';
+				}else{
+					// Send data to server through the Ajax call
+					// action is functionality we want to call and outputJSON is our data
                     $.ajax({url: 'http://192.168.1.107/check.php',
                         data: {action : 'login', formData : $('#check-user').serialize()},
                         type: 'post',                   
@@ -20,16 +24,22 @@ $(document).on('pageinit', '#login', function(){
                             if(result.status) {
                                 $.mobile.changePage("#message");                         
                             } else {
-                                alert('Logon unsuccessful!'); 
+                                $('#errorMsg').style.display = 'block';
+								$('#errMsg').innerText = 'Login Successful';
                             }
                         },
                         error: function (request,error) {
-                            // This callback function will trigger on unsuccessful action                
-                            alert('Network error has occurred please try again!');
+                            // This callback function will trigger on unsuccessful action 
+							$('#errorMsg').style.display = 'block';
+							$('#errMsg').innerText = 'Network error has occurred please try again';
                         }
-                    });                   
+                    });
+					$('#usrname').value = '';
+					$('#pswrd').value = '';
+				}
             } else {
-                alert('Please fill all necessary fields');
+                $('#errorMsg').style.display = 'block';
+				$('#errMsg').innerText = 'Please enter Username and Password to login';
             }           
             return false; // cancel original event to prevent form submitting
         });    
