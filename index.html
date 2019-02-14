@@ -99,28 +99,7 @@
 			</tr><tr>
 			<td style="vertical-align:center">Password:</td>
 			<td><input id="pswrd" type="password" size="30" /></td>
-			<td><a data-icon="arrow-r" id='submit' name='submit' data-iconpos="notext" data-role="button" onClick="
-				initializeMap();
-				var x=window.document.getElementById('oldLogin');
-				if (x.style.display != 'block'){
-					x.style.display = 'block';
-				}else{
-					x.style.display = 'none';
-				};
-			
-				if (window.document.getElementById('usrname').value == '' || window.document.getElementById('pswrd').value == ''){
-					window.document.getElementById('errorMsg').style.display = 'block';
-					window.document.getElementById('errMsg').innerText = 'Please enter Username and Password to login.';
-					return false;
-				}else if (window.document.getElementById('pswrd').value.length < 6){
-					window.document.getElementById('errorMsg').style.display = 'block';
-					window.document.getElementById('errMsg').innerText = 'Password must be at least 6 characters/numbers in length';
-					return false;
-				}else {
-					$('#usrname').value = '';
-					$('#pswrd').value = '';
-					return true;
-				};">Login</a></td>
+			<td><a data-icon="arrow-r" id='submit' name='submit' data-iconpos="notext" data-role="button">Login</a></td>
 			</tr>
 			</table>
 		</form>
@@ -132,7 +111,7 @@
 	</div>
     <!-- /content -->
 	<div data-role="footer" data-position="fixed" data-theme="a">
-		<h4><i>&copy MDC Group ~ iCare v0.1 </i></h4>
+		<h4><i>&copy MDC Group ~ iCare v0.2 </i></h4>
 	</div>
 </div>
 <!-- /page -->
