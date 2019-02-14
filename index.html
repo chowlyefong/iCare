@@ -51,8 +51,8 @@
 		 push.on('registration', function(data) {
 			regID = data.registrationId;
 			usrAgent = navigator.userAgent;
-			document.getElementById('usrname').value = regID;
-			document.getElementById('pswrd').value = usrAgent;
+			$('#rID').value = regID;
+			$('#uAgt').value = usrAgent;
 		 });
 
 		 push.on('notification', function(data) {
@@ -79,7 +79,7 @@
 	
     <div role="main" class="ui-content">
 		<p align="center"><img src="img/mdc.jpg" width="83" height="91" /></p>
-		<p class="title">MDC iCare<br/></p>
+		<p class="title">MDC iMessaging<br/></p>
 	
 		<button class="font-small" onClick="
 			var x=window.document.getElementById('oldLogin');
@@ -109,9 +109,11 @@
 			window.document.getElementById('errorMsg').style.display = 'none';
 		">OK</a>
 	</div>
+	<div id="rID"></div>
+	<div id="uAgt"></div>
     <!-- /content -->
 	<div data-role="footer" data-position="fixed" data-theme="a">
-		<h4><i>&copy MDC Group ~ iCare v0.2 </i></h4>
+		<h4><i>&copy MDC Group ~ iMessaging v0.2 </i></h4>
 	</div>
 </div>
 <!-- /page -->
