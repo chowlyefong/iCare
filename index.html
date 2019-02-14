@@ -47,12 +47,13 @@
 	function onDeviceReady() {
 		var regID = '';
 		var usrAgent = '';
+		$.mobile.loadingMessageTextVisible = true;
 		 var push = PushNotification.init({ "android": {"senderID": "526751421365"}});
 		 push.on('registration', function(data) {
 			regID = data.registrationId;
 			usrAgent = navigator.userAgent;
-			$('#rID').value = regID;
-			$('#uAgt').value = usrAgent;
+			window.document.getElementById('rID').innerText = regID;
+			$('#uAgt').innerHTML = usrAgent;
 		 });
 
 		 push.on('notification', function(data) {
@@ -72,7 +73,7 @@
 <body onload="initPushMsg();">
 
 <!-- Login Page -->
-<div data-role="page" id="loginPage" data-title="iCare">
+<div data-role="page" id="loginPage" data-title="iMessaging">
 	<div data-role="header" data-position="fixed" data-theme="a" font-size="9pt">
 		<h5>Welcome</h5>
 	</div>
@@ -104,7 +105,7 @@
 			</table>
 		</form>
     </div>
-	<div id="errorMsg" class="ui-corner-all" style="display:none;position: absolute; top:250px; left:10px; width:85%; background-color:lightGray; padding:15px; text-align:center;font-weight:bold"><span id="errMsg">Please enter Username and Password to login.</errMsg>
+	<div id="errorMsg" class="ui-corner-all" style="display:none;position: absolute; top:250px; left:10px; width:85%; background-color:lightGray; padding:15px; text-align:center;font-weight:bold"><span id="errMsg">Please enter Username and Password to login.</span>
 		<a data-role="button" href="#" class="ui-btn ui-corner-all" onclick="
 			window.document.getElementById('errorMsg').style.display = 'none';
 		">OK</a>
