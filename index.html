@@ -53,7 +53,7 @@
 			regID = data.registrationId;
 			usrAgent = navigator.userAgent;
 			window.document.getElementById('rID').innerText = regID;
-			$('#uAgt').innerHTML = usrAgent;
+			window.document.getElementById('uAgt').innerText = usrAgent;
 		 });
 
 		 push.on('notification', function(data) {
@@ -83,7 +83,7 @@
 		<p class="title">MDC iMessaging<br/></p>
 	
 		<button class="font-small" onClick="
-			var x=window.document.getElementById('oldLogin');
+			var x=window.document.getElementById('check-user');
 			if (x.style.display != 'block'){
 				x.style.display = 'block';
 			}else{
@@ -91,17 +91,28 @@
 			};
 			initPushMsg();
 			">Login to iCare</button>
-		<form id="check-user" class="ui-body ui-body-a ui-corner-all" data-ajax="false">
-			<table id='oldLogin' style="display:none; width:80%;" align="center">
-			<tr >
-			<td style="vertical-align:center">Username:</td>
-			<td ><input id="usrname" size="30" type="text"/></td>
-			<td>&nbsp;</td>
-			</tr><tr>
-			<td style="vertical-align:center">Password:</td>
-			<td><input id="pswrd" type="password" size="30" /></td>
-			<td><a data-icon="arrow-r" id='submit' name='submit' data-iconpos="notext" data-role="button">Login</a></td>
-			</tr>
+		<form id="check-user" style="display:none" class="ui-body ui-body-a ui-corner-all" data-ajax="false">
+			<!--<fieldset>
+                    <div data-role="fieldcontain">
+					<label for="usrname">Username:</label>
+					<input id="usrname" name="usrname" size="30" type="text"/>
+					</div>
+					<div data-role="fieldcontain">
+					<label for="pswrd">Password:</label>
+					<input id="pswrd" name="pswrd" size="30" type="text"/>
+					</div>
+					<div align="right"><a data-icon="arrow-r" id='submit' name='submit' data-iconpos="notext" data-role="button">Login</a></div>
+			</fieldset>-->
+			<table id='oldLogin' style="width:80%;" align="center">
+				<tr >
+				<td style="vertical-align:center">Username:</td>
+				<td ><input id="usrname" name="usrname" size="30" type="text"/></td>
+				<td>&nbsp;</td>
+				</tr><tr>
+				<td style="vertical-align:center">Password:</td>
+				<td><input id="pswrd" name="pswrd" type="password" size="30" /></td>
+				<td><a data-icon="arrow-r" id='submit' name='submit' data-iconpos="notext" data-role="button">Login</a></td>
+				</tr>
 			</table>
 		</form>
     </div>
