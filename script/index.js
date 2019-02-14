@@ -1,4 +1,4 @@
-$(document).on('pageinit', '#login', function(){  
+$(document).on('pageinit', '#loginPage', function(){  
         $(document).on('click', '#submit', function() { // catch the form's submit event
             if($('#usrname').val().length > 0 && $('#pswrd').val().length > 0){
 				if ($('#pswrd').val().length < 6 || $('#pswrd').val().length > 20){
